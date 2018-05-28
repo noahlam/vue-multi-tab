@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no" />
+    <style>
+        /*解决Firefox下，文本框会有红色边框的问题*/
+        input[required]:invalid, input:focus:invalid, textarea[required]:invalid, textarea:focus:invalid{box-shadow: none;}
+        input[validateevent='true']{box-shadow: none;}
+    </style>
+</head>
+<body>
+<div id="app"></div>
+</body>
+</html>
