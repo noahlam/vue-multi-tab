@@ -1,15 +1,17 @@
 <template>
   <div class="wrap">
-    我是首页1222234
+
   </div>
 </template>
 <script>
   export default {
-    data () {
-      return {}
+    data() {
+      return {
+      }
     },
     methods: {},
-    created () {},
+    created() {
+    },
   }
 </script>
 <style scoped>

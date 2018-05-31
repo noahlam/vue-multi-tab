@@ -19,7 +19,7 @@ const webpackConfig = {
     }
   },
   devServer: {
-    host: '0.0.0.0',
+    host: 'localhost',
     inline: true,
     port:8117,
     publicPath: '/',
