@@ -9,14 +9,59 @@
        <!--logo 结束-->
 
        <!--应用名称 开始-->
-       <div class="appName">应用名称</div>
+       <div class="appName">
+         <el-dropdown style="min-width: 200px">
+            <span class="appSelected">
+              应用名称1<i class="el-icon-arrow-down ml10"></i>
+            </span>
+           <el-dropdown-menu slot="dropdown" style="min-width: 200px">
+             <el-dropdown-item disabled>系统名称1</el-dropdown-item>
+             <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
+             <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
+             <el-dropdown-item disabled divided>系统名称2</el-dropdown-item>
+             <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
+             <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
+             <el-dropdown-item disabled divided>系统名称3</el-dropdown-item>
+             <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
+             <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
+           </el-dropdown-menu>
+         </el-dropdown>
+       </div>
        <!--应用名称 结束-->
      </div>
 
       <!--顶部栏 右侧-->
       <div class="dsf">
-        <div class="projectName"> 宁德市药械联合限价采购平台--项目名称</div>
-        <div class="userInfo">用户名</div>
+        <div class="projectName">
+          <el-dropdown>
+            <span class="mlr30">
+              宁德市药械联合限价采购平台<i class="el-icon-arrow-down ml10"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>
+              <el-dropdown-item>三明市药械联合限价采购平台</el-dropdown-item>
+              <el-dropdown-item>福州市药械联合限价采购招标项目</el-dropdown-item>
+              <el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>
+              <el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+        <div class="userInfo">
+          <el-dropdown >
+          <span class="mr10 dsf aic">
+            <img src="@/assets/default.jpg" class="avatar">
+            用户名
+            <i class="el-icon-arrow-down ml10"></i>
+          </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>修改密码</el-dropdown-item>
+              <el-dropdown-item>基本信息</el-dropdown-item>
+              <el-dropdown-item>手机号绑定/解绑</el-dropdown-item>
+              <el-dropdown-item>操作日志</el-dropdown-item>
+              <el-dropdown-item>退出系统</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
       </div>
     </header>
     <!--头部栏 结束-->
@@ -25,6 +70,11 @@
     <div class="mainWrap">
       <!--左侧菜单 开始-->
       <aside class="leftMenu">
+        <div class="leftSearch">
+          <el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
+            <el-button slot="append" icon="el-icon-search"></el-button>
+          </el-input>
+        </div>
         <el-menu default-active="2" class="el-menu-vertical-demo">
           <el-submenu index="1">
             <template slot="title">
@@ -74,6 +124,10 @@
 
 <!--公共样式-->
 <style>
+  .mlr30{margin: 0 30px;}
+  .ml10{margin-left: 10px}
+  .mr10{margin-right: 10px}
+  .ml20{margin-left: 20px}
   .dsf{display: flex}
   .jcc{justify-content: center;}
   .aic{align-items: center;}
@@ -87,7 +141,6 @@
   .topHeader{
     width: 100%;
     height: 60px;
-    background: #f00;
     display: flex;
     justify-content: space-between;
   }
@@ -96,6 +149,7 @@
     height: 60px;
     background: #409EFF;
     display: flex;
+    justify-content: center;
     align-items: center;
     color:#fff;
   }
@@ -103,13 +157,28 @@
     display: flex;
     align-items: center;
   }
+  .appSelected{
+    margin-left: 20px;
+    color:#409EFF;
+  }
+  .appItem{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
   .projectName{
+    margin-right: 20px;
     display: flex;
     align-items: center;
   }
   .userInfo{
     display: flex;
     align-items: center;
+  }
+  .avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
   }
   .mainWrap{
     width: 100%;
@@ -129,4 +198,7 @@
     margin: 0;
   }
   .leftMenu::-webkit-scrollbar {display: none;}
+  .leftSearch{
+
+  }
 </style>
