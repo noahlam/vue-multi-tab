@@ -63,7 +63,7 @@ module.exports = {
       {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
       {test: /\.css$/, loader: 'style-loader!css-loader'},
       // {test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'},
-      {test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/, loader: 'url-loader?limit=8192'},
+      {test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/, loader: 'url-loader?limit=8192&publicPath=/mainframe'},
       {test: /\.json$/, loader: 'json-loader'},
       {test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/, loader: 'file-loader?name=font/[name]-[hash].[ext]&publicPath=/mainframe'},
       // {test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/, loader: 'file-loader?publicPath=/'},
