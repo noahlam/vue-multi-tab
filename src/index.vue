@@ -79,11 +79,27 @@
                 <i class="el-icon-star-on myFavorIcon"></i>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item disabled>收藏夹</el-dropdown-item>
-                  <el-dropdown-item divided>页面名称1</el-dropdown-item>
-                  <el-dropdown-item>页面名称2</el-dropdown-item>
-                  <el-dropdown-item>页面名称3</el-dropdown-item>
-                  <el-dropdown-item>页面名称4</el-dropdown-item>
-                  <el-dropdown-item>页面名称5</el-dropdown-item>
+                  <el-dropdown-item divided style="padding-right: 10px;">
+                    <span @click="openFavorPage">页面名称1</span>
+                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
+                  </el-dropdown-item>
+                  <el-dropdown-item style="padding-right: 10px;">
+                    <span @click="openFavorPage">页面名称2</span>
+                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
+                  </el-dropdown-item>
+                  <el-dropdown-item style="padding-right: 10px;">
+                    <span @click="openFavorPage">页面名称3</span>
+                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
+                  </el-dropdown-item>
+                  <el-dropdown-item style="padding-right: 10px;">
+                    <span @click="openFavorPage">页面名称4</span>
+                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
+                  </el-dropdown-item>
+                  <el-dropdown-item style="padding-right: 10px;">
+                    <span @click="openFavorPage">页面名称5</span>
+                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
+                  </el-dropdown-item>
+
                 </el-dropdown-menu>
               </el-dropdown>
 
@@ -171,20 +187,52 @@
             <i class="el-icon-menu"></i>
           </div>
 
-          <div class="tabBarItem">
-            菜单111
-            <i class="el-icon-close ml20"></i>
-          </div>
+          <el-tooltip  placement="bottom" effect="light">
+            <div slot="content" class="dsf">
+                <div class="dsf aic mr20 csp">
+                  <i class="el-icon-refresh mr5"></i> 刷新
+                </div>
+                <div class="dsf aic csp">
+                  <i class="el-icon-star-off mr5"></i> 收藏
+                </div>
+            </div>
+            <div class="tabBarItem">
+              菜单111<i class="el-icon-close ml20"></i>
+            </div>
+          </el-tooltip>
 
-          <div class="tabBarItem">
-            菜单111
-            <i class="el-icon-close ml20"></i>
-          </div>
+          <el-tooltip  placement="bottom" effect="light">
+            <div slot="content" class="dsf">
+              <div class="dsf aic mr20 csp">
+                <i class="el-icon-refresh mr5"></i> 刷新
+              </div>
+              <div class="dsf aic csp">
+                <i class="el-icon-star-off mr5"></i> 收藏
+              </div>
+            </div>
+            <div class="tabBarItem">
+              菜单111<i class="el-icon-close ml20"></i>
+            </div>
+          </el-tooltip>
 
-          <div class="tabBarItem">
-            菜单111
-            <i class="el-icon-close ml20"></i>
-          </div>
+          <el-tooltip  placement="bottom" effect="light">
+            <div slot="content" class="dsf">
+              <div class="dsf aic mr20 csp">
+                <i class="el-icon-refresh mr5"></i> 刷新
+              </div>
+              <div class="dsf aic csp">
+                <i class="el-icon-star-off mr5"></i> 收藏
+              </div>
+            </div>
+            <div class="tabBarItem">
+              菜单111<i class="el-icon-close ml20"></i>
+            </div>
+          </el-tooltip>
+
+            <!--<el-popover placement="bottom" trigger="hover" content="这是一段内容">-->
+              <!--菜单111<i class="el-icon-close ml20"></i>-->
+            <!--</el-popover>-->
+
 
         </div>
         <router-view></router-view>
@@ -207,6 +255,14 @@
       // 显示/隐藏 主菜单
       showHideMenu(bool) {
         this.showMenu = bool
+      },
+      // 打开收藏页面
+      openFavorPage() {
+        console.log('打开收藏页面')
+      },
+      // 删除收藏夹项
+      deleteFavor (e) {
+        console.log('删除收藏夹项')
       }
     },
     created () {},
@@ -216,12 +272,16 @@
 <!--公共样式-->
 <style>
   .mlr30{margin: 0 30px;}
-  .ml10{margin-left: 10px}
-  .mr10{margin-right: 10px}
-  .ml20{margin-left: 20px}
-  .dsf{display: flex}
+  .mr5{margin-right: 5px;}
+  .ml10{margin-left: 10px;}
+  .mr10{margin-right: 10px;}
+  .ml20{margin-left: 20px;}
+  .mr20{margin-right: 20px;}
+  .pr10{padding-right: 10px;}
+  .dsf{display: flex;}
   .jcc{justify-content: center;}
   .aic{align-items: center;}
+  .csp{cursor: pointer;}
 </style>
 
 <!--私有样式-->
@@ -341,35 +401,34 @@
   }
   /*隐藏菜单 按钮*/
   .hideMenuButton{
-    height: 50px;
-    width: 25px;
+    height: 40px;
+    width: 10px;
     background: #ccc;
     position: absolute;
     top:50%;
-    left: 225px;
+    left: 240px;
     transform: translate(0,-50%);
-    border-radius: 25px 0 0 25px;
+    border-radius: 2px 0 0 2px;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: #fff;
-    font-size: 35px;
     z-index: 9999;
   }
   /*显示菜单 按钮*/
   .showMenuButton{
-    height: 50px;
-    width: 25px;
+    height: 40px;
+    width: 10px;
     background: #ccc;
     position: absolute;
     top:50%;
     left: 0;
     transform: translate(0,-50%);
-    border-radius:0  25px 25px 0;
+    border-radius:0  2px 2px 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     color: #fff;
-    font-size: 35px;
     z-index: 9999;
   }
 
