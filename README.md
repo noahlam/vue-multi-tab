@@ -1,3 +1,29 @@
-# 基于 kendo-ui 二次开发的组件库
+# README
 
-由于kendo-ui 不是开源软件,需要收费授权,所以请谨慎选用.
+
+### 安装依赖
+
+```
+npm i
+```
+
+或者
+
+```
+yarn
+```
+
+### 开发
+ ```console
+ npm run dev
+ ```
+
+
+### 部署
+
+```
+npm run build
+```
+
+
+> Tip: `webStrom` 的 `run/debug configurations 工具` 可以让你免去输入 `npm run dev` 的麻烦.直接点击按钮即可运行相应的命令.
