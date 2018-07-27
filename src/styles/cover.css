@@ -2,7 +2,7 @@
 
 /*菜单背景*/
 .el-menu {
-  background:rgb(7,21,38)!important;
+  background:#071526!important;
 }
 
 /*一级菜单 图标*/
@@ -17,14 +17,14 @@
 
 /*一级菜单 鼠标经过效果*/
 .el-submenu__title:hover{
-  background:rgb(7,21,50)!important;
+  background:#071530!important;
 }
 
  /*二级菜单*/
 .el-menu-item{
-  background:rgb(9,28,50)!important;
+  background:#091C32!important;
   color:#fff!important;
 }
-.is-active{
+.el-menu-item-group .is-active{
   background: #399CFF!important;
 }

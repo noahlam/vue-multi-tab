@@ -2,39 +2,41 @@
   <div class="indexWrap">
     <!--头部栏 开始-->
     <header class="topWrap">
-     <!--顶部栏 左侧-->
+      <!--顶部栏 左侧-->
       <div class="dsf">
-       <!--logo 开始-->
-       <div class="topLogo">  logo+文字</div>
-       <!--logo 结束-->
+        <!--logo 开始-->
+        <div class="topLogo"> logo+文字</div>
+        <!--logo 结束-->
 
-       <!--应用名称 开始-->
-       <div class="appName">
-         <el-dropdown style="min-width: 200px">
+        <!--应用名称 开始-->
+        <div class="appName">
+          <el-dropdown>
             <span class="appSelected">
-              应用名称1<i class="el-icon-arrow-down ml10"></i>
+              <i class="el-icon-menu"></i>
             </span>
-           <el-dropdown-menu slot="dropdown" style="min-width: 200px">
-             <el-dropdown-item disabled>系统名称1</el-dropdown-item>
-             <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
-             <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
-             <el-dropdown-item disabled divided>系统名称2</el-dropdown-item>
-             <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
-             <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
-             <el-dropdown-item disabled divided>系统名称3</el-dropdown-item>
-             <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
-             <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
-           </el-dropdown-menu>
-         </el-dropdown>
-       </div>
-       <!--应用名称 结束-->
-     </div>
+            <el-dropdown-menu slot="dropdown" style="min-width: 200px">
+              <el-dropdown-item disabled>系统名称1</el-dropdown-item>
+              <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
+              <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
+              <el-dropdown-item disabled divided>系统名称2</el-dropdown-item>
+              <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
+              <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
+              <el-dropdown-item disabled divided>系统名称3</el-dropdown-item>
+              <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
+              <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+        <!--应用名称 结束-->
+
+        <div class="currentProjectName">耗材联采限价采购-宁德耗材联合谈判</div>
+      </div>
 
       <!--顶部栏 右侧-->
       <div class="dsf">
         <div class="projectName">
           <el-dropdown>
-            <span class="mlr30">
+            <span class="mlr30 cfff">
               宁德市药械联合限价采购平台<i class="el-icon-arrow-down ml10"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -47,8 +49,8 @@
           </el-dropdown>
         </div>
         <div class="userInfo">
-          <el-dropdown >
-          <span class="mr10 dsf aic">
+          <el-dropdown>
+          <span class="mr10 dsf aic cfff">
             <img src="@/images/default.jpg" class="avatar">
             用户名
             <i class="el-icon-arrow-down ml10"></i>
@@ -164,7 +166,7 @@
           <!--左侧主菜单 结束-->
 
           <!--左侧 隐藏菜单按钮 开始-->
-          <div class="hideMenuButton" v-if="showMenu"  @click="showHideMenu(false)">
+          <div class="hideMenuButton" v-if="showMenu" @click="showHideMenu(false)">
             <i class="el-icon-arrow-left"></i>
           </div>
           <!--左侧 隐藏菜单按钮 结束-->
@@ -174,7 +176,7 @@
       <!--左侧 结束-->
 
       <!--左侧 显示菜单按钮 开始-->
-      <transition name="showMenu"  v-if="!showMenu">
+      <transition name="showMenu" v-if="!showMenu">
         <div class="showMenuButton" @click="showHideMenu(true)">
           <i class="el-icon-arrow-right"></i>
         </div>
@@ -183,60 +185,76 @@
 
       <!--右侧 开始-->
       <div class="right">
-        <div class="tabBar">
+        <!--<div class="tabBar">-->
 
-          <div class="tabBarHome">
-            <i class="el-icon-menu"></i>
-          </div>
+        <!--<div class="tabBarHome">-->
+        <!--<i class="el-icon-menu"></i>-->
+        <!--</div>-->
 
-          <el-tooltip  placement="bottom" effect="light">
-            <div slot="content" class="dsf">
-                <div class="dsf aic mr20 csp">
-                  <i class="el-icon-refresh mr5"></i> 刷新
-                </div>
-                <div class="dsf aic csp">
-                  <i class="el-icon-star-off mr5"></i> 收藏
-                </div>
-            </div>
-            <div class="tabBarItem">
-              菜单111<i class="el-icon-close ml20"></i>
-            </div>
-          </el-tooltip>
+        <!--<el-tooltip  placement="bottom" effect="light">-->
+        <!--<div slot="content" class="dsf">-->
+        <!--<div class="dsf aic mr20 csp">-->
+        <!--<i class="el-icon-refresh mr5"></i> 刷新-->
+        <!--</div>-->
+        <!--<div class="dsf aic csp">-->
+        <!--<i class="el-icon-star-off mr5"></i> 收藏-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="tabBarItem">-->
+        <!--菜单111<i class="el-icon-close ml20"></i>-->
+        <!--</div>-->
+        <!--</el-tooltip>-->
 
-          <el-tooltip  placement="bottom" effect="light">
-            <div slot="content" class="dsf">
-              <div class="dsf aic mr20 csp">
-                <i class="el-icon-refresh mr5"></i> 刷新
-              </div>
-              <div class="dsf aic csp">
-                <i class="el-icon-star-off mr5"></i> 收藏
-              </div>
-            </div>
-            <div class="tabBarItem">
-              菜单111<i class="el-icon-close ml20"></i>
-            </div>
-          </el-tooltip>
+        <!--<el-tooltip  placement="bottom" effect="light">-->
+        <!--<div slot="content" class="dsf">-->
+        <!--<div class="dsf aic mr20 csp">-->
+        <!--<i class="el-icon-refresh mr5"></i> 刷新-->
+        <!--</div>-->
+        <!--<div class="dsf aic csp">-->
+        <!--<i class="el-icon-star-off mr5"></i> 收藏-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="tabBarItem">-->
+        <!--菜单111<i class="el-icon-close ml20"></i>-->
+        <!--</div>-->
+        <!--</el-tooltip>-->
 
-          <el-tooltip  placement="bottom" effect="light">
-            <div slot="content" class="dsf">
-              <div class="dsf aic mr20 csp">
-                <i class="el-icon-refresh mr5"></i> 刷新
-              </div>
-              <div class="dsf aic csp">
-                <i class="el-icon-star-off mr5"></i> 收藏
-              </div>
-            </div>
-            <div class="tabBarItem">
-              菜单111<i class="el-icon-close ml20"></i>
-            </div>
-          </el-tooltip>
+        <!--<el-tooltip  placement="bottom" effect="light">-->
+        <!--<div slot="content" class="dsf">-->
+        <!--<div class="dsf aic mr20 csp">-->
+        <!--<i class="el-icon-refresh mr5"></i> 刷新-->
+        <!--</div>-->
+        <!--<div class="dsf aic csp">-->
+        <!--<i class="el-icon-star-off mr5"></i> 收藏-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="tabBarItem">-->
+        <!--菜单111<i class="el-icon-close ml20"></i>-->
+        <!--</div>-->
+        <!--</el-tooltip>-->
 
-            <!--<el-popover placement="bottom" trigger="hover" content="这是一段内容">-->
-              <!--菜单111<i class="el-icon-close ml20"></i>-->
-            <!--</el-popover>-->
+        <!--&lt;!&ndash;<el-popover placement="bottom" trigger="hover" content="这是一段内容">&ndash;&gt;-->
+        <!--&lt;!&ndash;菜单111<i class="el-icon-close ml20"></i>&ndash;&gt;-->
+        <!--&lt;!&ndash;</el-popover>&ndash;&gt;-->
 
 
+        <!--</div>-->
+        <div class="tabWrap">
+          <el-tabs v-model="editableTabsValue2" type="card" @tab-remove="removeTab" >
+            <el-tab-pane
+                v-for="(item, index) in editableTabs2"
+                :key="item.name"
+                :label="item.title"
+                :name="item.name"
+                :closable="item.closable"
+            >
+              <span slot="label" v-if="item.isHome"><i class="el-icon-date"></i></span>
+              {{item.content}}
+            </el-tab-pane>
+          </el-tabs>
         </div>
+
+
         <router-view></router-view>
       </div>
       <!--右侧 结束-->
@@ -248,9 +266,29 @@
 </template>
 <script>
   export default {
-    data () {
+    data() {
       return {
-        showMenu:true,
+        showMenu: true,
+        // 以下是 tab-bar 的数据
+        editableTabsValue2: '2',
+        editableTabs2: [{
+          title: 'Tab 1',
+          name: '0',
+          closable:false,
+          isHome:true,
+          content: 'Tab 0 content'
+        }, {
+          title: 'Tab 1',
+          name: '1',
+          closable:true,
+          content: 'Tab 1 content'
+        }, {
+          title: 'Tab 2',
+          name: '2',
+          closable:true,
+          content: 'Tab 2 content'
+        }],
+        tabIndex: 2
       }
     },
     methods: {
@@ -263,105 +301,172 @@
         console.log('打开收藏页面')
       },
       // 删除收藏夹项
-      deleteFavor (e) {
+      deleteFavor(e) {
         console.log('删除收藏夹项')
       },
       // 搜索
-      onSearch () {
+      onSearch() {
         console.log('搜索')
       },
+      // 删除 tab 项目
+      removeTab(targetName) {
+        console.log('删除 tab 项目',targetName)
+      }
     },
-    created () {},
+    created() {
+    },
   }
 </script>
 
 <!--公共样式-->
 <style>
   @import "~@/styles/cover.css";
-  .mlr30{margin: 0 30px;}
-  .mr5{margin-right: 5px;}
-  .ml10{margin-left: 10px;}
-  .mr10{margin-right: 10px;}
-  .ml20{margin-left: 20px;}
-  .mr20{margin-right: 20px;}
-  .pr10{padding-right: 10px;}
-  .dsf{display: flex;}
-  .jcc{justify-content: center;}
-  .aic{align-items: center;}
-  .csp{cursor: pointer;}
+
+  .cfff {
+    color: #fff;
+  }
+
+  .mlr30 {
+    margin: 0 30px;
+  }
+
+  .mr5 {
+    margin-right: 5px;
+  }
+
+  .ml10 {
+    margin-left: 10px;
+  }
+
+  .mr10 {
+    margin-right: 10px;
+  }
+
+  .ml20 {
+    margin-left: 20px;
+  }
+
+  .mr20 {
+    margin-right: 20px;
+  }
+
+  .pr10 {
+    padding-right: 10px;
+  }
+
+  .dsf {
+    display: flex;
+  }
+
+  .jcc {
+    justify-content: center;
+  }
+
+  .aic {
+    align-items: center;
+  }
+
+  .csp {
+    cursor: pointer;
+  }
 </style>
 
 <!--私有样式-->
 <style scoped>
   /*总容器*/
-  .indexWrap{
+  .indexWrap {
     min-width: 1200px;
   }
+
   /*顶部栏*/
-  .topWrap{
+  .topWrap {
     width: 100%;
     height: 64px;
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
+    background: #399CFF;
+    color: #fff;
   }
+
   /*头部logo*/
-  .topLogo{
+  .topLogo {
     width: 200px;
     height: 100%;
     background: #409EFF;
     display: flex;
     justify-content: center;
     align-items: center;
-    color:#fff;
+    color: #fff;
   }
+
   /*应用选择*/
-  .appName{
+  .appName {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 64px;
+    background: #0680F9;
+    color: #fff;
   }
-  .appSelected{
-    margin-left: 20px;
-    color:#409EFF;
+
+  .appSelected {
+    color: #fff;
+    font-size: 30px;
   }
-  .appItem{
+
+  .appItem {
     padding-left: 30px;
     padding-right: 30px;
   }
+
+  /*当前项目名称*/
+  .currentProjectName {
+    padding-left: 15px;
+    line-height: 64px;
+    font-size: 16px;
+  }
+
   /*项目选择*/
-  .projectName{
+  .projectName {
     margin-right: 20px;
     display: flex;
     align-items: center;
+    color: red;
   }
+
   /*个人信息*/
-  .userInfo{
+  .userInfo {
     display: flex;
     align-items: center;
   }
-  .avatar{
+
+  .avatar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
   }
+
   /*主容器*/
-  .middleWrap{
+  .middleWrap {
     width: 100%;
     height: calc(100vh - 64px);
     overflow: hidden;
     display: flex;
     position: relative;
   }
+
   /*主菜单*/
-  .left{
+  .left {
     width: 200px;
     height: 100%;
     display: block;
     /*background: #fff;*/
-    background:rgb(7,21,38)!important;
+    background: #071526;
     /*border-right: 1px solid #e6e6e6;*/
-    overflow-y:scroll;
+    overflow-y: scroll;
     overflow-x: hidden;
     padding: 0;
     margin: 0;
@@ -369,30 +474,36 @@
     box-sizing: border-box;
     flex-shrink: 0;
   }
-  .left::-webkit-scrollbar {display: none;}
+
+  .left::-webkit-scrollbar {
+    display: none;
+  }
 
   /*菜单显示/隐藏 动画*/
   .left-enter-active, .left-leave-active {
     transition: width .5s;
   }
+
   .left-enter, .left-leave-to {
     width: 0px;
   }
 
   /*搜索和收藏*/
-  .searchAndFavor{
+  .searchAndFavor {
     padding: 8px 5px 0 5px;
     box-sizing: border-box;
     width: 100%;
     display: flex;
     /*border-bottom: 1px solid #e6e6e6;*/
-    background:#163B65;
+    background: #163B65;
     height: 46px;
   }
-  .searchiIcon{
+
+  .searchiIcon {
     font-size: 20px;
     line-height: 28px;
   }
+
   .myFavor {
     width: 28px;
     height: 28px;
@@ -404,37 +515,40 @@
     align-items: center;
     margin-left: 10px;
   }
-  .myFavorIcon{
+
+  .myFavorIcon {
     color: #fff;
     font-size: 20px;
     line-height: 28px;
   }
+
   /*隐藏菜单 按钮*/
-  .hideMenuButton{
-    width:12px;
-    height:50px;
-    background:rgb(3,10,19);
+  .hideMenuButton {
+    width: 12px;
+    height: 50px;
+    background: rgb(3, 10, 19);
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 187px;
-    transform: translate(0,-50%);
-    border-radius:10px 0 0 10px;
+    transform: translate(0, -50%);
+    border-radius: 10px 0 0 10px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     color: #fff;
     z-index: 9999;
   }
+
   /*显示菜单 按钮*/
-  .showMenuButton{
-    width:12px;
-    height:50px;
-    background:rgb(3,10,19);
+  .showMenuButton {
+    width: 12px;
+    height: 50px;
+    background: rgb(3, 10, 19);
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 0;
-    transform: translate(0,-50%);
-    border-radius:0px 10px 10px 0px;
+    transform: translate(0, -50%);
+    border-radius: 0px 10px 10px 0px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -446,32 +560,41 @@
   .showMenu-enter-active, .showMenu-leave-active {
     transition: opacity .5s;
   }
+
   .showMenu-enter, .showMenu-leave-to {
     opacity: 0;
   }
 
   /*右侧布局*/
-  .right{
+  .right {
     width: 100%;
     background: #fff;
     border-top: 1px solid #e6e6e6;
   }
-  .tabBar{
-    background: #fff;
+
+  .tabWrap{
+    background: #F5F7FA;
     height: 46px;
-    display: flex;
-    border-bottom: 1px solid #e6e6e6;
+   padding-top: 4px;
     box-sizing: border-box;
   }
-  .tabBarHome{
+  .tabBar {
+    background: #F5F7FA;
+    height: 46px;
+    display: flex;
+    box-sizing: border-box;
+    color: #4A4A4A;
+  }
+
+  .tabBarHome {
     width: 46px;
     font-size: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid #e6e6e6;
   }
-  .tabBarItem{
+
+  .tabBarItem {
     height: 100%;
     padding: 0 10px;
     min-width: 100px;
