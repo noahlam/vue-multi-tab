@@ -49,7 +49,7 @@
         <div class="userInfo">
           <el-dropdown >
           <span class="mr10 dsf aic">
-            <img src="@/assets/default.jpg" class="avatar">
+            <img src="@/images/default.jpg" class="avatar">
             用户名
             <i class="el-icon-arrow-down ml10"></i>
           </span>
@@ -73,7 +73,9 @@
         <aside class="left" v-if="showMenu">
           <!--搜索和收藏 开始-->
           <header class="searchAndFavor">
-            <el-input placeholder="请输入内容" suffix-icon="el-icon-search" ></el-input>
+            <el-input placeholder="请输入内容" size="mini">
+              <i class="el-icon-search searchiIcon" slot="suffix" @click="onSearch"></i>
+            </el-input>
             <div class="myFavor">
               <el-dropdown>
                 <i class="el-icon-star-on myFavorIcon"></i>
@@ -163,7 +165,7 @@
 
           <!--左侧 隐藏菜单按钮 开始-->
           <div class="hideMenuButton" v-if="showMenu"  @click="showHideMenu(false)">
-            <i class="el-icon-caret-left"></i>
+            <i class="el-icon-arrow-left"></i>
           </div>
           <!--左侧 隐藏菜单按钮 结束-->
 
@@ -174,7 +176,7 @@
       <!--左侧 显示菜单按钮 开始-->
       <transition name="showMenu"  v-if="!showMenu">
         <div class="showMenuButton" @click="showHideMenu(true)">
-          <i class="el-icon-caret-right"></i>
+          <i class="el-icon-arrow-right"></i>
         </div>
       </transition>
       <!--左侧 显示菜单按钮 结束-->
@@ -263,7 +265,11 @@
       // 删除收藏夹项
       deleteFavor (e) {
         console.log('删除收藏夹项')
-      }
+      },
+      // 搜索
+      onSearch () {
+        console.log('搜索')
+      },
     },
     created () {},
   }
@@ -271,6 +277,7 @@
 
 <!--公共样式-->
 <style>
+  @import "~@/styles/cover.css";
   .mlr30{margin: 0 30px;}
   .mr5{margin-right: 5px;}
   .ml10{margin-left: 10px;}
@@ -293,15 +300,14 @@
   /*顶部栏*/
   .topWrap{
     width: 100%;
-    height: 60px;
+    height: 64px;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #e6e6e6;
     box-sizing: border-box;
   }
   /*头部logo*/
   .topLogo{
-    width: 250px;
+    width: 200px;
     height: 100%;
     background: #409EFF;
     display: flex;
@@ -342,18 +348,19 @@
   /*主容器*/
   .middleWrap{
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 64px);
     overflow: hidden;
     display: flex;
     position: relative;
   }
   /*主菜单*/
   .left{
-    width: 250px;
+    width: 200px;
     height: 100%;
     display: block;
-    background: #fff;
-    border-right: 1px solid #e6e6e6;
+    /*background: #fff;*/
+    background:rgb(7,21,38)!important;
+    /*border-right: 1px solid #e6e6e6;*/
     overflow-y:scroll;
     overflow-x: hidden;
     padding: 0;
@@ -374,20 +381,23 @@
 
   /*搜索和收藏*/
   .searchAndFavor{
-    padding: 5px;
+    padding: 8px 5px 0 5px;
     box-sizing: border-box;
     width: 100%;
     display: flex;
-    border-bottom: 1px solid #e6e6e6;
-    background: #fff;
-    height: 50px;
-    box-sizing: border-box;
+    /*border-bottom: 1px solid #e6e6e6;*/
+    background:#163B65;
+    height: 46px;
+  }
+  .searchiIcon{
+    font-size: 20px;
+    line-height: 28px;
   }
   .myFavor {
-    width: 40px;
-    height: 40px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background-color: #409EFF;
+    background-color: #2b5992;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
@@ -396,35 +406,35 @@
   }
   .myFavorIcon{
     color: #fff;
-    font-size: 30px;
-    line-height: 40px;
+    font-size: 20px;
+    line-height: 28px;
   }
   /*隐藏菜单 按钮*/
   .hideMenuButton{
-    height: 40px;
-    width: 10px;
-    background: #ccc;
+    width:12px;
+    height:50px;
+    background:rgb(3,10,19);
     position: absolute;
     top:50%;
-    left: 240px;
+    left: 187px;
     transform: translate(0,-50%);
-    border-radius: 2px 0 0 2px;
+    border-radius:10px 0 0 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     color: #fff;
     z-index: 9999;
   }
   /*显示菜单 按钮*/
   .showMenuButton{
-    height: 40px;
-    width: 10px;
-    background: #ccc;
+    width:12px;
+    height:50px;
+    background:rgb(3,10,19);
     position: absolute;
     top:50%;
     left: 0;
     transform: translate(0,-50%);
-    border-radius:0  2px 2px 0;
+    border-radius:0px 10px 10px 0px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -444,16 +454,17 @@
   .right{
     width: 100%;
     background: #fff;
+    border-top: 1px solid #e6e6e6;
   }
   .tabBar{
     background: #fff;
-    height: 50px;
+    height: 46px;
     display: flex;
     border-bottom: 1px solid #e6e6e6;
     box-sizing: border-box;
   }
   .tabBarHome{
-    width: 49px;
+    width: 46px;
     font-size: 30px;
     display: flex;
     justify-content: center;

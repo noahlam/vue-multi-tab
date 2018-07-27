@@ -1,0 +1,30 @@
+/* 主要为了覆盖 element 默认样式 */
+
+/*菜单背景*/
+.el-menu {
+  background:rgb(7,21,38)!important;
+}
+
+/*一级菜单 图标*/
+.el-submenu__title i {
+  color: #fff!important;
+}
+
+/*一级菜单 文字*/
+.el-submenu__title{
+  color:#fff!important;
+}
+
+/*一级菜单 鼠标经过效果*/
+.el-submenu__title:hover{
+  background:rgb(7,21,50)!important;
+}
+
+ /*二级菜单*/
+.el-menu-item{
+  background:rgb(9,28,50)!important;
+  color:#fff!important;
+}
+.is-active{
+  background: #399CFF!important;
+}
