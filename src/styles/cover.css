@@ -28,3 +28,8 @@
 .el-menu-item-group .is-active{
   background: #399CFF!important;
 }
+
+/*tab-bar 选中项的样式*/
+.el-tabs__nav .is-active {
+  background: #fff!important;
+}

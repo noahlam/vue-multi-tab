@@ -239,6 +239,8 @@
 
 
         <!--</div>-->
+
+        <!--打开的菜单(tab-bar) 开始-->
         <div class="tabWrap">
           <el-tabs v-model="editableTabsValue2" type="card" @tab-remove="removeTab" >
             <el-tab-pane
@@ -248,12 +250,12 @@
                 :name="item.name"
                 :closable="item.closable"
             >
-              <span slot="label" v-if="item.isHome"><i class="el-icon-date"></i></span>
+              <span slot="label" v-if="item.isHome"><i class="el-icon-location tabIcon"></i></span>
               {{item.content}}
             </el-tab-pane>
           </el-tabs>
         </div>
-
+        <!--打开的菜单(tab-bar) 结束-->
 
         <router-view></router-view>
       </div>
@@ -575,33 +577,13 @@
   .tabWrap{
     background: #F5F7FA;
     height: 46px;
-   padding-top: 4px;
+    padding-top: 5px;
+    padding-left: 10px;
     box-sizing: border-box;
   }
-  .tabBar {
-    background: #F5F7FA;
-    height: 46px;
-    display: flex;
+  .tabIcon{
+    font-size: 20px;
+    line-height: 30px;
     box-sizing: border-box;
-    color: #4A4A4A;
-  }
-
-  .tabBarHome {
-    width: 46px;
-    font-size: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .tabBarItem {
-    height: 100%;
-    padding: 0 10px;
-    min-width: 100px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-right: 1px solid #e6e6e6;
   }
 </style>
