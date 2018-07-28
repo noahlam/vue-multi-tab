@@ -33,3 +33,8 @@
 .el-tabs__nav .is-active {
   background: #fff!important;
 }
+
+
+.el-dropdown-menu .el-popper {
+  background: chocolate!important;
+}

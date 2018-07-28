@@ -185,76 +185,51 @@
 
       <!--右侧 开始-->
       <div class="right">
-        <!--<div class="tabBar">-->
-
-        <!--<div class="tabBarHome">-->
-        <!--<i class="el-icon-menu"></i>-->
-        <!--</div>-->
-
-        <!--<el-tooltip  placement="bottom" effect="light">-->
-        <!--<div slot="content" class="dsf">-->
-        <!--<div class="dsf aic mr20 csp">-->
-        <!--<i class="el-icon-refresh mr5"></i> 刷新-->
-        <!--</div>-->
-        <!--<div class="dsf aic csp">-->
-        <!--<i class="el-icon-star-off mr5"></i> 收藏-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="tabBarItem">-->
-        <!--菜单111<i class="el-icon-close ml20"></i>-->
-        <!--</div>-->
-        <!--</el-tooltip>-->
-
-        <!--<el-tooltip  placement="bottom" effect="light">-->
-        <!--<div slot="content" class="dsf">-->
-        <!--<div class="dsf aic mr20 csp">-->
-        <!--<i class="el-icon-refresh mr5"></i> 刷新-->
-        <!--</div>-->
-        <!--<div class="dsf aic csp">-->
-        <!--<i class="el-icon-star-off mr5"></i> 收藏-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="tabBarItem">-->
-        <!--菜单111<i class="el-icon-close ml20"></i>-->
-        <!--</div>-->
-        <!--</el-tooltip>-->
-
-        <!--<el-tooltip  placement="bottom" effect="light">-->
-        <!--<div slot="content" class="dsf">-->
-        <!--<div class="dsf aic mr20 csp">-->
-        <!--<i class="el-icon-refresh mr5"></i> 刷新-->
-        <!--</div>-->
-        <!--<div class="dsf aic csp">-->
-        <!--<i class="el-icon-star-off mr5"></i> 收藏-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="tabBarItem">-->
-        <!--菜单111<i class="el-icon-close ml20"></i>-->
-        <!--</div>-->
-        <!--</el-tooltip>-->
-
-        <!--&lt;!&ndash;<el-popover placement="bottom" trigger="hover" content="这是一段内容">&ndash;&gt;-->
-        <!--&lt;!&ndash;菜单111<i class="el-icon-close ml20"></i>&ndash;&gt;-->
-        <!--&lt;!&ndash;</el-popover>&ndash;&gt;-->
-
-
-        <!--</div>-->
 
         <!--打开的菜单(tab-bar) 开始-->
         <div class="tabWrap">
-          <el-tabs v-model="editableTabsValue2" type="card" @tab-remove="removeTab" >
-            <el-tab-pane
-                v-for="(item, index) in editableTabs2"
-                :key="item.name"
-                :label="item.title"
-                :name="item.name"
-                :closable="item.closable"
-            >
-              <span slot="label" v-if="item.isHome"><i class="el-icon-location tabIcon"></i></span>
-              {{item.content}}
-            </el-tab-pane>
-          </el-tabs>
+          <div class="tabBar">
+            <el-tabs v-model="editableTabsValue2" type="card" @tab-remove="removeTab">
+              <el-tab-pane
+                  v-for="(item, index) in editableTabs2"
+                  :key="item.name"
+                  :label="item.title"
+                  :name="item.name"
+                  :closable="item.closable"
+              >
+                <el-dropdown  slot="label" placement="bottom">
+                  <i v-if="item.isHome" class="el-icon-location tabIcon"></i>
+                  <div v-else>{{item.title}}</div>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>
+                      <div class="tabDropdown">
+                        <div class="tabDropdownRefresh">
+                            <i class="el-icon-refresh"></i> 刷新
+                        </div>
+                        <div class="tabDropdownFavor tabDropdownFavorActivity">
+                          <i class="el-icon-star-off"></i> 收藏
+                        </div>
+                      </div>
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                {{item.content}}
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+          <div class="tabOperate">
+            <el-dropdown  trigger="click">
+              <i class="el-icon-tickets"></i>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>全屏</el-dropdown-item>
+                <el-dropdown-item>关闭全部</el-dropdown-item>
+                <el-dropdown-item>关闭其他标签</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+
+          </div>
         </div>
+
         <!--打开的菜单(tab-bar) 结束-->
 
         <router-view></router-view>
@@ -276,21 +251,28 @@
         editableTabs2: [{
           title: 'Tab 1',
           name: '0',
-          closable:false,
-          isHome:true,
+          closable: false,
+          isHome: true,
           content: 'Tab 0 content'
         }, {
           title: 'Tab 1',
           name: '1',
-          closable:true,
+          closable: true,
           content: 'Tab 1 content'
         }, {
           title: 'Tab 2',
           name: '2',
-          closable:true,
+          closable: true,
           content: 'Tab 2 content'
         }],
-        tabIndex: 2
+        tabIndex: 2,
+
+        // 收藏页面列表
+        favorList: [
+          {name: '组件管理', component: ''},
+          {name: '注册证管理', component: ''},
+          {name: '产品管理', component: ''},
+        ]
       }
     },
     methods: {
@@ -312,7 +294,7 @@
       },
       // 删除 tab 项目
       removeTab(targetName) {
-        console.log('删除 tab 项目',targetName)
+        console.log('删除 tab 项目', targetName)
       }
     },
     created() {
@@ -395,11 +377,13 @@
   .topLogo {
     width: 200px;
     height: 100%;
-    background: #409EFF;
+    background: #0680F9;
+    border-right:1px solid #6DB6FF;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #fff;
+    box-sizing: border-box;
   }
 
   /*应用选择*/
@@ -538,7 +522,7 @@
     align-items: center;
     justify-content: flex-start;
     color: #fff;
-    z-index: 9999;
+    z-index: 99;
   }
 
   /*显示菜单 按钮*/
@@ -555,7 +539,7 @@
     justify-content: flex-end;
     align-items: center;
     color: #fff;
-    z-index: 9999;
+    z-index: 99;
   }
 
   /*显示/隐藏 按鈕 动画*/
@@ -574,16 +558,60 @@
     border-top: 1px solid #e6e6e6;
   }
 
-  .tabWrap{
+  .tabWrap {
+    position: relative;
+  }
+
+  .tabBar {
     background: #F5F7FA;
     height: 46px;
     padding-top: 5px;
     padding-left: 10px;
     box-sizing: border-box;
   }
-  .tabIcon{
+
+  .tabIcon {
     font-size: 20px;
     line-height: 30px;
     box-sizing: border-box;
+  }
+
+  .tabOperate {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 5px;
+    top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-radius: 3px;
+  }
+
+  .tabDropdown{
+    display: flex;
+  }
+  .tabDropdown i {
+    font-size: 20px;
+    margin-right: 5px;
+  }
+
+  .tabDropdownRefresh {
+    color:#606266;
+    font-size: 14px;
+    padding-right: 10px;
+    border-right: 1px solid #E4E7ED;
+    display: flex;
+    align-items: center;
+  }
+  .tabDropdownFavor{
+    color:#606266;
+    font-size: 14px;
+    padding-left: 10px;
+  }
+
+  .tabDropdownFavorActivity{
+    color:#399CFF;
   }
 </style>
