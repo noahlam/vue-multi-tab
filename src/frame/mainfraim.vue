@@ -112,55 +112,70 @@
           <!--搜索和收藏 结束-->
 
           <!--左侧主菜单 开始-->
-          <el-menu default-active="2" class="el-menu-vertical-demo">
+          <el-menu>
 
-            <el-submenu index="1">
+            <el-submenu v-for="(item,index) in config.menu" :key="index" :index="item.index">
               <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>导航一</span>
+                <i :class="item.icon"></i>
+                <span>{{item.name}}</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-                <el-menu-item index="1-3">选项3</el-menu-item>
+                <el-menu-item v-for="(subItem,subIndex) in item.sub"
+                              :key="subIndex"
+                              @click="addTab(subItem)"
+                              :index="subItem.index">
+                  {{subItem.name}}
+                </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 
-            <el-submenu index="2">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>导航二</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1">选项1</el-menu-item>
-                <el-menu-item index="2-2">选项2</el-menu-item>
-                <el-menu-item index="2-3">选项3</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
+            <!--<el-submenu index="1">-->
+              <!--<template slot="title">-->
+                <!--<i class="el-icon-location"></i>-->
+                <!--<span>导航一</span>-->
+              <!--</template>-->
+              <!--<el-menu-item-group>-->
+                <!--<el-menu-item index="1-1">选项1</el-menu-item>-->
+                <!--<el-menu-item index="1-2">选项2</el-menu-item>-->
+                <!--<el-menu-item index="1-3">选项3</el-menu-item>-->
+              <!--</el-menu-item-group>-->
+            <!--</el-submenu>-->
 
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-document"></i>
-                <span>导航三</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="3-1">选项1</el-menu-item>
-                <el-menu-item index="3-2">选项2</el-menu-item>
-                <el-menu-item index="3-3">选项3</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
+            <!--<el-submenu index="2">-->
+              <!--<template slot="title">-->
+                <!--<i class="el-icon-menu"></i>-->
+                <!--<span>导航二</span>-->
+              <!--</template>-->
+              <!--<el-menu-item-group>-->
+                <!--<el-menu-item index="2-1">选项1</el-menu-item>-->
+                <!--<el-menu-item index="2-2">选项2</el-menu-item>-->
+                <!--<el-menu-item index="2-3">选项3</el-menu-item>-->
+              <!--</el-menu-item-group>-->
+            <!--</el-submenu>-->
 
-            <el-submenu index="4">
-              <template slot="title">
-                <i class="el-icon-setting"></i>
-                <span>导航四</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="4-1">选项1</el-menu-item>
-                <el-menu-item index="4-2">选项2</el-menu-item>
-                <el-menu-item index="4-3">选项3</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
+            <!--<el-submenu index="3">-->
+              <!--<template slot="title">-->
+                <!--<i class="el-icon-document"></i>-->
+                <!--<span>导航三</span>-->
+              <!--</template>-->
+              <!--<el-menu-item-group>-->
+                <!--<el-menu-item index="3-1">选项1</el-menu-item>-->
+                <!--<el-menu-item index="3-2">选项2</el-menu-item>-->
+                <!--<el-menu-item index="3-3">选项3</el-menu-item>-->
+              <!--</el-menu-item-group>-->
+            <!--</el-submenu>-->
+
+            <!--<el-submenu index="4">-->
+              <!--<template slot="title">-->
+                <!--<i class="el-icon-setting"></i>-->
+                <!--<span>导航四</span>-->
+              <!--</template>-->
+              <!--<el-menu-item-group>-->
+                <!--<el-menu-item index="4-1">选项1</el-menu-item>-->
+                <!--<el-menu-item index="4-2">选项2</el-menu-item>-->
+                <!--<el-menu-item index="4-3">选项3</el-menu-item>-->
+              <!--</el-menu-item-group>-->
+            <!--</el-submenu>-->
 
           </el-menu>
           <!--左侧主菜单 结束-->
@@ -189,13 +204,13 @@
         <!--打开的菜单(tab-bar) 开始-->
         <div class="tabWrap">
           <div class="tabBar">
-            <el-tabs v-model="editableTabsValue2" type="card" @tab-remove="removeTab">
+            <el-tabs v-model="currentTab" type="card" @tab-remove="removeTab">
               <el-tab-pane
-                  v-for="(item, index) in editableTabs2"
+                  v-for="(item, index) in openedTabs"
                   :key="item.name"
                   :label="item.title"
                   :name="item.name"
-                  :closable="item.closable"
+                  :closable="item.name !== 'index'"
               >
                 <el-dropdown  slot="label" placement="bottom">
                   <i v-if="item.isHome" class="el-icon-location tabIcon"></i>
@@ -213,7 +228,8 @@
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-                {{item.content}}
+                <!--{{item.component}}-->
+                <component :is="item.component"></component>
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -232,7 +248,7 @@
 
         <!--打开的菜单(tab-bar) 结束-->
 
-        <router-view></router-view>
+        <!--<router-view></router-view>-->
       </div>
       <!--右侧 结束-->
 
@@ -242,30 +258,28 @@
   </div>
 </template>
 <script>
+  import config from './mainconf'
+  import index from '@/view/index'
+  import hello1 from '@/view/hello1'
+  import hello2 from '@/view/hello2'
+  import hello3 from '@/view/hello3'
   export default {
+    components:{index, hello1, hello2, hello3 },
     data() {
       return {
+        config: config,
         showMenu: true,
+
         // 以下是 tab-bar 的数据
-        editableTabsValue2: '2',
-        editableTabs2: [{
-          title: 'Tab 1',
-          name: '0',
-          closable: false,
-          isHome: true,
-          content: 'Tab 0 content'
-        }, {
-          title: 'Tab 1',
-          name: '1',
-          closable: true,
-          content: 'Tab 1 content'
-        }, {
-          title: 'Tab 2',
-          name: '2',
-          closable: true,
-          content: 'Tab 2 content'
-        }],
-        tabIndex: 2,
+        currentTab: 'index',
+        openedTabs: [
+          {
+            title: '首页',
+            name: 'index',
+            component: 'index'
+          }
+        ],
+        tabIndex: 1,
 
         // 收藏页面列表
         favorList: [
@@ -292,10 +306,27 @@
       onSearch() {
         console.log('搜索')
       },
-      // 删除 tab 项目
+      // 删除 tab 项
       removeTab(targetName) {
-        console.log('删除 tab 项目', targetName)
-      }
+        console.log('删除 tab 项', targetName)
+      },
+      // 打开新的 tab  项
+      addTab(item) {
+
+        this.currentTab = item.name
+
+        // 判断 tab 项是否已存在
+        if(this.openedTabs.find(i => i.name === item.name)){
+          return
+        }
+
+        this.openedTabs.push({
+          title: item.name,    // 显示标题
+          name:item.name,      // 用于标记当前打开 tab 的 name
+          component: item.component,   // tab 里显示的组件
+        });
+
+      },
     },
     created() {
     },

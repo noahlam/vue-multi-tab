@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackConfig = {
   mode: "development",
   entry: {
-    index: './src/mainfraim.js',
+    index: './src/frame/mainfraim.js',
   },
   output: {
     publicPath: "/",
@@ -30,7 +30,6 @@ const webpackConfig = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      title: '特沃兹电商',
       inject: true
     }),
   ],
