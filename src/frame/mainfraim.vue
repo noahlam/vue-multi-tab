@@ -6,63 +6,68 @@
       <div class="dsf">
         <!--logo 开始-->
         <div class="topLogo">
-          <img class="topLogo-img" :src="logoUrl" />
+          <img class="topLogo-img" :src="config.logoUrl" />
         </div>
         <!--logo 结束-->
 
         <!--应用名称 开始-->
         <div class="appName">
-          <el-dropdown>
+          <el-dropdown placement="bottom">
             <span class="appSelected">
               <i class="el-icon-menu"></i>
             </span>
-            <el-dropdown-menu slot="dropdown" style="min-width: 200px">
-              <el-dropdown-item disabled>系统名称1</el-dropdown-item>
-              <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
-              <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
-              <el-dropdown-item disabled divided>系统名称2</el-dropdown-item>
-              <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
-              <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
-              <el-dropdown-item disabled divided>系统名称3</el-dropdown-item>
-              <el-dropdown-item class="appItem">应用名称1</el-dropdown-item>
-              <el-dropdown-item class="appItem">应用名称2</el-dropdown-item>
+            <el-dropdown-menu slot="dropdown" >
+              <el-dropdown-item disabled>我的应用</el-dropdown-item>
+              <el-dropdown-item v-for="(item,index) in config.application"
+                                :key="index"
+                                :divided="item.divided">
+
+                <div class="appItem" @click="gotoApplication(item.url)">
+                  <i :class='item.icon' class="appItem-icon" v-if="item.icon"></i>
+                  <div>{{item.title}}</div>
+                </div>
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
         <!--应用名称 结束-->
 
+        <!--当前项目名称-->
         <div class="currentProjectName">{{config.projectName}}</div>
       </div>
 
       <!--顶部栏 右侧-->
       <div class="dsf">
+        <!--客户公司名称-->
         <div class="projectName">
-          <el-dropdown>
-            <span class="mlr30 cfff">
-              宁德市药械联合限价采购平台<i class="el-icon-arrow-down ml10"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>
-              <el-dropdown-item>三明市药械联合限价采购平台</el-dropdown-item>
-              <el-dropdown-item>福州市药械联合限价采购招标项目</el-dropdown-item>
-              <el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>
-              <el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+          {{config.customerCompany}}
+          <!--<el-dropdown>-->
+            <!--<span class="mlr30 cfff">-->
+              <!--宁德市药械联合限价采购平台<i class="el-icon-arrow-down ml10"></i>-->
+            <!--</span>-->
+            <!--<el-dropdown-menu slot="dropdown">-->
+              <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
+              <!--<el-dropdown-item>三明市药械联合限价采购平台</el-dropdown-item>-->
+              <!--<el-dropdown-item>福州市药械联合限价采购招标项目</el-dropdown-item>-->
+              <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
+              <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
+            <!--</el-dropdown-menu>-->
+          <!--</el-dropdown>-->
         </div>
+        <!--用户信息-->
         <div class="userInfo">
           <el-dropdown>
           <span class="mr10 dsf aic cfff">
-            <img src="@/images/default.jpg" class="avatar">
-            用户名
+            <img :src="config.customerAvatar" class="avatar">
+            {{config.customerName}}
             <i class="el-icon-arrow-down ml10"></i>
           </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>修改密码</el-dropdown-item>
-              <el-dropdown-item>基本信息</el-dropdown-item>
-              <el-dropdown-item>手机号绑定/解绑</el-dropdown-item>
-              <el-dropdown-item>操作日志</el-dropdown-item>
-              <el-dropdown-item>退出系统</el-dropdown-item>
+              <el-dropdown-item @click="config.onEditPassword">修改密码</el-dropdown-item>
+              <el-dropdown-item @click="config.onViewBaseInfo">基本信息</el-dropdown-item>
+              <el-dropdown-item @click="config.onBindPhone">手机号绑定/解绑</el-dropdown-item>
+              <el-dropdown-item @click="config.onViewOperateLog">操作日志</el-dropdown-item>
+              <el-dropdown-item @click="config.onExit">退出系统</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -77,8 +82,8 @@
         <aside class="left" v-if="showMenu && !fullScreen">
           <!--搜索和收藏 开始-->
           <header class="searchAndFavor">
-            <el-input placeholder="请输入内容" size="mini">
-              <i class="el-icon-search searchiIcon" slot="suffix" @click="onSearch"></i>
+            <el-input placeholder="请输入内容" size="mini" v-model="searchText">
+              <i class="el-icon-search searchiIcon" slot="suffix" @click="config.onSearch(searchText)"></i>
             </el-input>
             <div class="myFavor">
               <el-dropdown>
@@ -90,8 +95,8 @@
                                     :key="index"
                                     :divided="index === 0"
                                     style="padding-right: 10px;">
-                    <span @click="addTab(item)">{{item.name}}</span>
-                    <i class="el-icon-close ml10" @click="deleteFavor(item)"></i>
+                    <span @click="addTab(item)">{{item.title}}</span>
+                    <i class="el-icon-close ml10" @click="config.removeCollect(item)"></i>
                   </el-dropdown-item>
 
                 </el-dropdown-menu>
@@ -107,14 +112,14 @@
             <el-submenu v-for="(item,index) in config.menu" :key="index" :index="item.index">
               <template slot="title">
                 <i :class="item.icon"></i>
-                <span>{{item.name}}</span>
+                <span>{{item.title}}</span>
               </template>
               <el-menu-item-group>
                 <el-menu-item v-for="(subItem,subIndex) in item.sub"
                               :key="subIndex"
                               @click="addTab(subItem)"
                               :index="subItem.index">
-                  {{subItem.name}}
+                  {{subItem.title}}
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -160,10 +165,10 @@
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
                       <div class="tabDropdown">
-                        <div class="tabDropdownRefresh">
+                        <div class="tabDropdownRefresh" @click="reFreshTab(item)">
                           <i class="el-icon-refresh"></i> 刷新
                         </div>
-                        <div class="tabDropdownFavor tabDropdownFavorActivity">
+                        <div class="tabDropdownFavor tabDropdownFavorActivity" @click="config.addCollect(item)">
                           <i class="el-icon-star-off"></i> 收藏
                         </div>
                       </div>
@@ -211,59 +216,48 @@ export default {
 	components: {index, hello1, hello2, hello3},
 	data () {
 		return {
-			config: config,
-			showMenu: true,
-      fullScreen: false,
-
+			config: config,         // 全局配置
+			showMenu: true,         // 是否显示左侧菜单
+      fullScreen: false,      // 是否全屏
+      searchText:'',          // 搜索框里的文字
 			// 以下是 tab-bar 的数据
-			currentTab: 'index',
-			openedTabs: [
+			currentTab: 'index',    // 当前 tab 项的 name
+			openedTabs: [           // 当前打开的 tab 列表
 				{
-					title: '首页',
-					name: 'index',
-					component: 'index'
+					title: '首页',      //  tab 显示标题
+					name: 'index',      //  tab 内部名称(用来识别当前打开的tab)
+					component: 'index'  //  tab 对应的组件
 				}
 			],
-			tabIndex: 1,
 		}
 	},
-  computed: {
-    logoUrl () {
-      return this.config.logoUrl
-    }
-  },
+  computed: {},
 	methods: {
 		// 显示/隐藏 主菜单
 		showHideMenu (bool) {
 			this.showMenu = bool
 		},
-		// 删除收藏夹项
-		deleteFavor (item) {
-		  this.config.favor = this.config.favor.filter(i => i.name !== item.name )
-		},
-		// 搜索
-		onSearch () {
-			console.log('搜索')
-		},
 		// 删除 tab 项
-		removeTab (name) {
+		removeTab (title) {
       this.openedTabs = this.openedTabs.filter(item => {
-        return item.name === 'index' || item.name !== name
+        return item.title === 'index' || item.title !== title
       })
+      let tab =  this.openedTabs.find(item => item.title === title)
+      if(!tab)   this.currentTab = 'index'
 		},
 		// 打开新的 tab  项
 		addTab (item) {
 
-			this.currentTab = item.name
+			this.currentTab = item.title
 
 			// 判断 tab 项是否已存在
-			if (this.openedTabs.find(i => i.name === item.name)) {
+			if (this.openedTabs.find(i => i.name === item.title)) {
 				return
 			}
 
 			this.openedTabs.push({
-				title: item.name,    // 显示标题
-				name: item.name,      // 用于标记当前打开 tab 的 name
+				title: item.title,    // 显示标题
+				name: item.title,      // 用于标记当前打开 tab 的 name
 				component: item.component,   // tab 里显示的组件
 			});
 
@@ -280,7 +274,7 @@ export default {
 			requestMethod.call(document.body);
 			this.fullScreen = true
 		},
-		//退出全屏
+		// 退出全屏
 		exitFullScreen () {
 			this.fullScreen = false
 			var exitMethod = document.exitFullscreen ||
@@ -308,11 +302,30 @@ export default {
 			this.openedTabs = this.openedTabs.filter(item => {
 				return item.name === 'index' || item.name === this.currentTab
       })
-		}
+		},
+    // 跳转到对应的应用
+    gotoApplication (url) {
+		  location.href = url
+    },
+    // 刷新组件
+    reFreshTab (item) {
+		  let c = item.component
+      item.component = null
+      this.$nextTick(() => {
+        item.component = c
+      })
+    },
 	},
 	created () {
 		this.listenEvent()
+    config.onInit()
 	},
+  mounted() {
+    config.onShow()
+  },
+  beforeDestroy() {
+	  config.onDistory()
+  }
 }
 </script>
 
@@ -419,8 +432,12 @@ export default {
   }
 
   .appItem {
-    padding-left: 30px;
-    padding-right: 30px;
+    display: flex;
+    align-items: center;
+  }
+  .appItem-icon{
+    margin-right: 5px;
+    font-size: 16px;
   }
 
   /*当前项目名称*/
@@ -435,7 +452,7 @@ export default {
     margin-right: 20px;
     display: flex;
     align-items: center;
-    color: red;
+    /*color: red;*/
   }
 
   /*个人信息*/
