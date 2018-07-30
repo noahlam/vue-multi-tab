@@ -5,7 +5,9 @@
       <!--顶部栏 左侧-->
       <div class="dsf">
         <!--logo 开始-->
-        <div class="topLogo"> logo+文字</div>
+        <div class="topLogo">
+          <img class="topLogo-img" :src="logoUrl" />
+        </div>
         <!--logo 结束-->
 
         <!--应用名称 开始-->
@@ -29,7 +31,7 @@
         </div>
         <!--应用名称 结束-->
 
-        <div class="currentProjectName">耗材联采限价采购-宁德耗材联合谈判</div>
+        <div class="currentProjectName">{{config.projectName}}</div>
       </div>
 
       <!--顶部栏 右侧-->
@@ -83,25 +85,13 @@
                 <i class="el-icon-star-on myFavorIcon"></i>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item disabled>收藏夹</el-dropdown-item>
-                  <el-dropdown-item divided style="padding-right: 10px;">
-                    <span @click="openFavorPage">页面名称1</span>
-                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
-                  </el-dropdown-item>
-                  <el-dropdown-item style="padding-right: 10px;">
-                    <span @click="openFavorPage">页面名称2</span>
-                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
-                  </el-dropdown-item>
-                  <el-dropdown-item style="padding-right: 10px;">
-                    <span @click="openFavorPage">页面名称3</span>
-                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
-                  </el-dropdown-item>
-                  <el-dropdown-item style="padding-right: 10px;">
-                    <span @click="openFavorPage">页面名称4</span>
-                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
-                  </el-dropdown-item>
-                  <el-dropdown-item style="padding-right: 10px;">
-                    <span @click="openFavorPage">页面名称5</span>
-                    <i class="el-icon-close ml10" @click="deleteFavor"></i>
+
+                  <el-dropdown-item v-for="(item,index) in config.favor"
+                                    :key="index"
+                                    :divided="index === 0"
+                                    style="padding-right: 10px;">
+                    <span @click="addTab(item)">{{item.name}}</span>
+                    <i class="el-icon-close ml10" @click="deleteFavor(item)"></i>
                   </el-dropdown-item>
 
                 </el-dropdown-menu>
@@ -159,7 +149,7 @@
             <el-tabs v-model="currentTab" type="card" @tab-remove="removeTab">
               <el-tab-pane
                   v-for="(item, index) in openedTabs"
-                  :key="item.name"
+                  :key="index"
                   :label="item.title"
                   :name="item.name"
                   :closable="item.name !== 'index'"
@@ -191,7 +181,6 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="exitFullScreen" v-if="fullScreen">退出全屏</el-dropdown-item>
                 <el-dropdown-item @click.native="enterFullScreen" v-else>全屏</el-dropdown-item>
-
                 <el-dropdown-item @click.native="closeAllTabs">关闭全部</el-dropdown-item>
                 <el-dropdown-item @click.native="closeOtherTabs">关闭其他标签</el-dropdown-item>
               </el-dropdown-menu>
@@ -236,35 +225,31 @@ export default {
 				}
 			],
 			tabIndex: 1,
-
-			// 收藏页面列表
-			favorList: [
-				{name: '组件管理', component: ''},
-				{name: '注册证管理', component: ''},
-				{name: '产品管理', component: ''},
-			]
 		}
 	},
+  computed: {
+    logoUrl () {
+      return this.config.logoUrl
+    }
+  },
 	methods: {
 		// 显示/隐藏 主菜单
 		showHideMenu (bool) {
 			this.showMenu = bool
 		},
-		// 打开收藏页面
-		openFavorPage () {
-			console.log('打开收藏页面')
-		},
 		// 删除收藏夹项
-		deleteFavor (e) {
-			console.log('删除收藏夹项')
+		deleteFavor (item) {
+		  this.config.favor = this.config.favor.filter(i => i.name !== item.name )
 		},
 		// 搜索
 		onSearch () {
 			console.log('搜索')
 		},
 		// 删除 tab 项
-		removeTab (targetName) {
-			console.log('删除 tab 项', targetName)
+		removeTab (name) {
+      this.openedTabs = this.openedTabs.filter(item => {
+        return item.name === 'index' || item.name !== name
+      })
 		},
 		// 打开新的 tab  项
 		addTab (item) {
@@ -283,7 +268,6 @@ export default {
 			});
 
 		},
-
     // 全屏
 		enterFullScreen () {
 			let element = this.$refs['right']
@@ -415,7 +399,9 @@ export default {
     color: #fff;
     box-sizing: border-box;
   }
-
+  .topLogo-img{
+    height: 30px;
+  }
   /*应用选择*/
   .appName {
     display: flex;
