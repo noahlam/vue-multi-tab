@@ -213,13 +213,8 @@
 </template>
 <script>
 import config from './mainconf'
-import index from '@/view/index'
-import hello1 from '@/view/hello1'
-import hello2 from '@/view/hello2'
-import hello3 from '@/view/hello3'
 
 export default {
-	components: {index, hello1, hello2, hello3},
 	data () {
 		return {
 			config: config,
