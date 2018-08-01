@@ -51,9 +51,9 @@ export default {
       icon:'el-icon-setting',
       index:'4',
       sub:[
-        {title:'子菜单4-1',component: 'hello1',index: '3-1'},
-        {title:'子菜单4-2',component: 'hello2',index: '3-2'},
-        {title:'子菜单4-3',component: 'hello3',index: '3-3'}
+        {title:'子菜单4-1',component: 'hello1',index: '4-1'},
+        {title:'子菜单4-2',component: 'hello2',index: '4-2'},
+        {title:'子菜单4-3',component: 'hello3',index: '4-3'}
       ]
     },
   ],
@@ -85,7 +85,7 @@ export default {
       url:'/',
     },
     {
-      name: '返回应用中心',        // 显示名称
+      title: '返回应用中心',        // 显示名称
       divided: true,              // 分割线
       url:'http://www.baidu.com', // 跳转地址
       icon: 'el-icon-arrow-left'  // 图标（可选）
