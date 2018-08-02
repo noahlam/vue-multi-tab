@@ -2,41 +2,40 @@
 
 /*菜单背景*/
 .el-menu {
-  background:#071526!important;
+  background: #071526 !important;
 }
 
 /*一级菜单 图标*/
 .el-submenu__title i {
-  color: #fff!important;
+  color: #fff !important;
 }
 
 /*一级菜单 文字*/
-.el-submenu__title{
-  color:#fff!important;
+.el-submenu__title {
+  color: #fff !important;
 }
 
 /*一级菜单 鼠标经过效果*/
-.el-submenu__title:hover{
-  background:#071530!important;
+.el-submenu__title:hover {
+  background: #071530 !important;
 }
 
- /*二级菜单*/
-.el-menu-item{
-  background:#091C32!important;
-  color:#fff!important;
+/*二级菜单*/
+.el-menu-item {
+  background: #091c32 !important;
+  color: #fff !important;
 }
-.el-menu-item-group .is-active{
-  background: #399CFF!important;
+.el-menu-item-group .is-active {
+  background: #399cff !important;
 }
 
 /*tab-bar 选中项的样式*/
 .el-tabs__nav .is-active {
-  background: #fff!important;
+  background: #fff !important;
 }
 
-
 .el-dropdown-menu .el-popper {
-  background: chocolate!important;
+  background: chocolate !important;
 }
 
 /*全屏样式*/
@@ -44,4 +43,15 @@ body:-webkit-full-screen {
   width: 100%;
   height: 100%;
   background: red;
+}
+/*全屏时tab隐藏*/
+.fullRight > .tabWrap > .tabBar {
+  background: none;
+}
+.fullRight .el-tabs__header {
+  display: none;
+}
+/*全屏控件*/
+.fullRight > .tabWrap > .tabOperate {
+  display: none;
 }
