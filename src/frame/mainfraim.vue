@@ -55,21 +55,23 @@
           <!--</el-dropdown>-->
         </div>
         <!--用户信息-->
-        <div class="userInfo">
-          <el-dropdown>
+        <div class="userInfoWrap">
+          <div class="userInfo">
+            <el-dropdown placement="bottom">
           <span class="mr10 dsf aic cfff">
             <img :src="config.customerAvatar" class="avatar">
             {{config.customerName}}
             <i class="el-icon-arrow-down ml10"></i>
           </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click="config.onEditPassword">修改密码</el-dropdown-item>
-              <el-dropdown-item @click="config.onViewBaseInfo">基本信息</el-dropdown-item>
-              <el-dropdown-item @click="config.onBindPhone">手机号绑定/解绑</el-dropdown-item>
-              <el-dropdown-item @click="config.onViewOperateLog">操作日志</el-dropdown-item>
-              <el-dropdown-item @click="config.onExit">退出系统</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click="config.onEditPassword">修改密码</el-dropdown-item>
+                <el-dropdown-item @click="config.onViewBaseInfo">基本信息</el-dropdown-item>
+                <el-dropdown-item @click="config.onBindPhone">手机号绑定/解绑</el-dropdown-item>
+                <el-dropdown-item @click="config.onViewOperateLog">操作日志</el-dropdown-item>
+                <el-dropdown-item @click="config.onExit">退出系统</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
         </div>
       </div>
     </header>
@@ -94,8 +96,8 @@
                   <el-dropdown-item v-for="(item,index) in config.favor"
                                     :key="index"
                                     :divided="index === 0"
-                                    style="padding-right: 10px;">
-                    <span @click="addTab(item)">{{item.title}}</span>
+                                    style="min-width: 150px;">
+                    <span @click="openTab(item)">{{item.title}}</span>
                     <i class="el-icon-close ml10" @click="config.removeCollect(item)"></i>
                   </el-dropdown-item>
 
@@ -117,7 +119,7 @@
               <el-menu-item-group>
                 <el-menu-item v-for="(subItem,subIndex) in item.sub"
                               :key="subIndex"
-                              @click="addTab(subItem)"
+                              @click="openTab(subItem)"
                               :index="subItem.index">
                   {{subItem.title}}
                 </el-menu-item>
@@ -156,26 +158,26 @@
                   v-for="(item, index) in openedTabs"
                   :key="index"
                   :label="item.title"
-                  :name="item.name"
-                  :closable="item.name !== 'index'"
+                  :name="item.index"
+                  :closable="item.index !== 'home'"
               >
-                <el-dropdown slot="label" placement="bottom">
-                  <i v-if="item.isHome" class="el-icon-location tabIcon"></i>
+                <el-dropdown slot="label" placement="bottom" v-if="item.index === currentTab">
+                  <i v-if="item.title === 'home'" class="el-icon-location tabIcon"></i>
                   <div v-else>{{item.title}}</div>
-                  <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-menu slot="dropdown" >
                     <el-dropdown-item>
                       <div class="tabDropdown">
                         <div class="tabDropdownRefresh" @click="reFreshTab(item)">
                           <i class="el-icon-refresh"></i> 刷新
                         </div>
-                        <div class="tabDropdownFavor tabDropdownFavorActivity" @click="config.addCollect(item)">
+                        <div class="tabDropdownLine"></div>
+                        <div class="tabDropdownFavor" @click="config.addCollect(item)">
                           <i class="el-icon-star-off"></i> 收藏
                         </div>
                       </div>
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-                <!--{{item.component}}-->
                 <component :is="item.component"></component>
               </el-tab-pane>
             </el-tabs>
@@ -211,17 +213,18 @@ import config from './mainconf'
 export default {
 	data () {
 		return {
-			config: config,         // 全局配置
-			showMenu: true,         // 是否显示左侧菜单
-      fullScreen: false,      // 是否全屏
-      searchText:'',          // 搜索框里的文字
+			config: config,          // 全局配置
+			showMenu: true,          // 是否显示左侧菜单
+      fullScreen: false,       // 是否全屏
+      searchText:'',           // 搜索框里的文字
 			// 以下是 tab-bar 的数据
-			currentTab: 'index',    // 当前 tab 项的 name
-			openedTabs: [           // 当前打开的 tab 列表
+			currentTab: 'home',     // 当前 tab 项的 name
+      currentTabIndexArray:[], // 当前打开的tab 的 index 集合
+			openedTabs: [            // 当前打开的 tab 列表
 				{
-					title: '首页',      //  tab 显示标题
-					name: 'index',      //  tab 内部名称(用来识别当前打开的tab)
-					component: 'index'  //  tab 对应的组件
+					title: '首页',       //  tab 显示标题
+					index: 'home',      //  tab 内部名称(用来识别当前打开的tab)
+					component: 'home'    //  tab 对应的组件
 				}
 			],
 		}
@@ -231,31 +234,6 @@ export default {
 		// 显示/隐藏 主菜单
 		showHideMenu (bool) {
 			this.showMenu = bool
-		},
-		// 删除 tab 项
-		removeTab (title) {
-      this.openedTabs = this.openedTabs.filter(item => {
-        return item.title === 'index' || item.title !== title
-      })
-      let tab =  this.openedTabs.find(item => item.title === title)
-      if(!tab)   this.currentTab = 'index'
-		},
-		// 打开新的 tab  项
-		addTab (item) {
-
-			this.currentTab = item.title
-
-			// 判断 tab 项是否已存在
-			if (this.openedTabs.find(i => i.name === item.title)) {
-				return
-			}
-
-			this.openedTabs.push({
-				title: item.title,    // 显示标题
-				name: item.title,      // 用于标记当前打开 tab 的 name
-				component: item.component,   // tab 里显示的组件
-			});
-
 		},
     // 全屏
 		enterFullScreen () {
@@ -287,17 +265,60 @@ export default {
 		    !isFull && that.exitFullScreen()
 	    }
     },
+    // 删除 tab 项
+    removeTab (index) {
+      this.openedTabs = this.openedTabs.filter(item => {
+        return item.index === 'home' || item.index !== index
+      })
+      this.setHash()
+
+      // 查询当前标签是否被关闭，如果被关闭，则打开主页标签
+      let tab =  this.openedTabs.find(item => item.index === index)
+      if(!tab)   this.currentTab = 'home'
+    },
+    // 打开新的 tab  项
+    openTab (item, fromHash = false) {
+
+      this.currentTab = item.index
+
+      // 判断 tab 项是否已存在
+      if (this.openedTabs.find(i => i.index === item.index)) {
+        return
+      }
+
+      this.openedTabs.push({
+        title: item.title,          // 显示标题
+        index: item.index,          // 用于标记当前打开 tab 的 name
+        component: item.component,  // tab 里显示的组件
+      });
+
+      if(!fromHash) {
+        this.currentTabIndexArray.push(item.index)
+        this.setHash()
+      }
+    },
 		// 关闭所有 tab
 		closeAllTabs () {
 			this.openedTabs.length = 1
-      this.currentTab = 'index'
+      this.currentTab = 'home'
+      this.setHash()
     },
     // 关闭其他标签
 		closeOtherTabs () {
 			this.openedTabs = this.openedTabs.filter(item => {
-				return item.name === 'index' || item.name === this.currentTab
+				return item.index === 'home' || item.index === this.currentTab
       })
+      this.setHash()
 		},
+    // 设置 hash
+    setHash () {
+      this.currentTabIndexArray = []
+      this.openedTabs.map(item => {
+        item.index !== 'home' && this.currentTabIndexArray.push(item.index)
+      })
+      console.log(this.currentTabIndexArray)
+      location.hash = "#?" + this.currentTabIndexArray.join(';')
+    },
     // 跳转到对应的应用
     gotoApplication (url) {
 		  location.href = url
@@ -310,10 +331,34 @@ export default {
         item.component = c
       })
     },
+    reShowTabs () {
+      try{
+        let url = location.href
+        let separationIndex = url.indexOf("#?")
+        if(separationIndex < 0)  return
+        let openedTabsName = url.substr(separationIndex + 2)
+        // 要打开的 tab 的 index 数组
+        this.currentTabIndexArray = openedTabsName.split(';')
+        let that = this
+        // 回显
+        this.config.menu.map( menu => {
+          menu.sub && menu.sub.map(submenu => {
+            this.currentTabIndexArray.map( openedTab => {
+              if(openedTab === submenu.index) {
+                that.openTab(submenu,true)
+              }
+            })
+          })
+        })
+      } catch (e) {
+
+      }
+    }
 	},
 	created () {
 		this.listenEvent()
     config.onInit()
+    this.reShowTabs()
 	},
   mounted() {
     config.onShow()
@@ -400,7 +445,7 @@ export default {
     width: 200px;
     height: 100%;
     background: #0680F9;
-    border-right: 1px solid #6DB6FF;
+    border-right: 1px solid #53a9ff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -417,8 +462,13 @@ export default {
     justify-content: center;
     width: 60px;
     height: 64px;
-    background: #0680F9;
+    /*background: #0680F9;*/
+    background: #399CFF;
     color: #fff;
+    border-right: 1px solid #53a9ff;
+  }
+  .appName:hover{
+    background: #53a9ff;
   }
 
   .appSelected {
@@ -444,21 +494,28 @@ export default {
 
   /*项目选择*/
   .projectName {
-    margin-right: 20px;
+    padding-right: 10px;
     display: flex;
     align-items: center;
+    border-right: 1px solid #53a9ff;
     /*color: red;*/
   }
 
   /*个人信息*/
+  .userInfoWrap {
+    padding-left: 10px;
+  }
+  .userInfoWrap:hover{
+    background: #53a9ff;
+  }
   .userInfo {
+    margin: 12px 0;
     display: flex;
     align-items: center;
   }
-
   .avatar {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 10px;
   }
@@ -529,12 +586,16 @@ export default {
     align-items: center;
     margin-left: 10px;
   }
+  .myFavor:hover{
+    background: #3d76bc;
+  }
 
   .myFavorIcon {
     color: #fff;
     font-size: 20px;
     line-height: 28px;
   }
+
 
   /*隐藏菜单 按钮*/
   .hideMenuButton {
@@ -624,24 +685,33 @@ export default {
     align-items: center;
     background: #fff;
     border-radius: 3px;
+    border: 1px solid #e4e7ed;
   }
 
   .tabDropdown {
     display: flex;
+    align-items: center;
   }
 
   .tabDropdown i {
     font-size: 20px;
     margin-right: 5px;
   }
+  .tabDropdownLine{
+    width: 1px;
+    height: 20px;
+    background: #E4E7ED;
+  }
 
   .tabDropdownRefresh {
     color: #606266;
     font-size: 14px;
     padding-right: 10px;
-    border-right: 1px solid #E4E7ED;
     display: flex;
     align-items: center;
+  }
+  .tabDropdownRefresh:hover{
+    color: #399CFF;
   }
 
   .tabDropdownFavor {
@@ -650,7 +720,7 @@ export default {
     padding-left: 10px;
   }
 
-  .tabDropdownFavorActivity {
+  .tabDropdownFavor:hover{
     color: #399CFF;
   }
 </style>
