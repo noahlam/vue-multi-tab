@@ -1,0 +1,47 @@
+.cfff {
+  color: #fff;
+}
+
+.mlr30 {
+  margin: 0 30px;
+}
+
+.mr5 {
+  margin-right: 5px;
+}
+
+.ml10 {
+  margin-left: 10px;
+}
+
+.mr10 {
+  margin-right: 10px;
+}
+
+.ml20 {
+  margin-left: 20px;
+}
+
+.mr20 {
+  margin-right: 20px;
+}
+
+.pr10 {
+  padding-right: 10px;
+}
+
+.dsf {
+  display: flex;
+}
+
+.jcc {
+  justify-content: center;
+}
+
+.aic {
+  align-items: center;
+}
+
+.csp {
+  cursor: pointer;
+}

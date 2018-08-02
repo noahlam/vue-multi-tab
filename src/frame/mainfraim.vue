@@ -14,7 +14,7 @@
         <div class="appName">
           <el-dropdown placement="bottom">
             <span class="appSelected">
-              <i class="el-icon-menu"></i>
+              <i class="hx hx-hx_yingyongfenleiqita appNameIcon"></i>
             </span>
             <el-dropdown-menu slot="dropdown" >
               <el-dropdown-item disabled>我的应用</el-dropdown-item>
@@ -88,15 +88,14 @@
               <i class="el-icon-search searchiIcon" slot="suffix" @click="config.onSearch(searchText)"></i>
             </el-input>
             <div class="myFavor">
-              <el-dropdown>
+              <el-dropdown placement="bottom">
                 <i class="el-icon-star-on myFavorIcon"></i>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item disabled>收藏夹</el-dropdown-item>
 
                   <el-dropdown-item v-for="(item,index) in config.favor"
                                     :key="index"
-                                    :divided="index === 0"
-                                    style="min-width: 150px;">
+                                    :divided="index === 0" >
                     <span @click="openTab(item)">{{item.title}}</span>
                     <i class="el-icon-close ml10" @click="config.removeCollect(item)"></i>
                   </el-dropdown-item>
@@ -153,7 +152,7 @@
         <!--打开的菜单(tab-bar) 开始-->
         <div class="tabWrap">
           <div class="tabBar">
-            <el-tabs v-model="currentTab" type="card" @tab-remove="removeTab">
+            <el-tabs v-model="currentTabIndex" type="card" @tab-remove="removeTab">
               <el-tab-pane
                   v-for="(item, index) in openedTabs"
                   :key="index"
@@ -161,30 +160,33 @@
                   :name="item.index"
                   :closable="item.index !== 'home'"
               >
-                <el-dropdown slot="label" placement="bottom" v-if="item.index === currentTab">
-                  <i v-if="item.title === 'home'" class="el-icon-location tabIcon"></i>
-                  <div v-else>{{item.title}}</div>
-                  <el-dropdown-menu slot="dropdown" >
-                    <el-dropdown-item>
-                      <div class="tabDropdown">
-                        <div class="tabDropdownRefresh" @click="reFreshTab(item)">
-                          <i class="el-icon-refresh"></i> 刷新
+                  <el-dropdown  slot="label" placement="bottom" v-if="item.index==='home' || currentTabIndex === item.index">
+                    <i v-if="item.index === 'home'" class="hx hx-hx_zhuye tabIcon"></i>
+                    <div v-else>{{item.title}}</div>
+                    <el-dropdown-menu slot="dropdown" class="elDropdownMenu" v-if="item.index!=='home'">
+                      <el-dropdown-item class="elDropdownItem">
+                        <div class="tabDropdown">
+                          <div class="tabDropdownRefresh" @click="reFreshTab(item)">
+                            <i class="hx hx-hx_xshuaxin"></i> 刷新
+                          </div>
+                          <div class="tabDropdownLine"></div>
+                          <div class="tabDropdownFavor" @click="config.addCollect(item)">
+                            <i class="hx hx-hx_xshoucang"></i> 收藏
+                          </div>
                         </div>
-                        <div class="tabDropdownLine"></div>
-                        <div class="tabDropdownFavor" @click="config.addCollect(item)">
-                          <i class="el-icon-star-off"></i> 收藏
-                        </div>
-                      </div>
-                    </el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+
                 <component :is="item.component"></component>
               </el-tab-pane>
             </el-tabs>
           </div>
           <div class="tabOperate">
-            <el-dropdown trigger="click">
-              <i class="el-icon-tickets"></i>
+            <el-dropdown trigger="click" placement="bottom-start">
+              <!--<i class="el-icon-tickets"></i>-->
+              <i class="hx hx-hx_gengduogongneng"></i>
+
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="exitFullScreen" v-if="fullScreen">退出全屏</el-dropdown-item>
                 <el-dropdown-item @click.native="enterFullScreen" v-else>全屏</el-dropdown-item>
@@ -218,7 +220,7 @@ export default {
       fullScreen: false,       // 是否全屏
       searchText:'',           // 搜索框里的文字
 			// 以下是 tab-bar 的数据
-			currentTab: 'home',     // 当前 tab 项的 name
+			currentTabIndex: 'home',     // 当前 tab 项的 name
       currentTabIndexArray:[], // 当前打开的tab 的 index 集合
 			openedTabs: [            // 当前打开的 tab 列表
 				{
@@ -274,12 +276,12 @@ export default {
 
       // 查询当前标签是否被关闭，如果被关闭，则打开主页标签
       let tab =  this.openedTabs.find(item => item.index === index)
-      if(!tab)   this.currentTab = 'home'
+      if(!tab)   this.currentTabIndex = 'home'
     },
     // 打开新的 tab  项
     openTab (item, fromHash = false) {
 
-      this.currentTab = item.index
+      this.currentTabIndex = item.index
 
       // 判断 tab 项是否已存在
       if (this.openedTabs.find(i => i.index === item.index)) {
@@ -300,13 +302,13 @@ export default {
 		// 关闭所有 tab
 		closeAllTabs () {
 			this.openedTabs.length = 1
-      this.currentTab = 'home'
+      this.currentTabIndex = 'home'
       this.setHash()
     },
     // 关闭其他标签
 		closeOtherTabs () {
 			this.openedTabs = this.openedTabs.filter(item => {
-				return item.index === 'home' || item.index === this.currentTab
+				return item.index === 'home' || item.index === this.currentTabIndex
       })
       this.setHash()
 		},
@@ -372,58 +374,14 @@ export default {
 <!--公共样式-->
 <style>
   @import "~@/styles/cover.css";
+  @import "~@/styles/common.css";
+  @import "~@/styles/iconfont/iconfont.css";
 
-  .cfff {
-    color: #fff;
-  }
-
-  .mlr30 {
-    margin: 0 30px;
-  }
-
-  .mr5 {
-    margin-right: 5px;
-  }
-
-  .ml10 {
-    margin-left: 10px;
-  }
-
-  .mr10 {
-    margin-right: 10px;
-  }
-
-  .ml20 {
-    margin-left: 20px;
-  }
-
-  .mr20 {
-    margin-right: 20px;
-  }
-
-  .pr10 {
-    padding-right: 10px;
-  }
-
-  .dsf {
-    display: flex;
-  }
-
-  .jcc {
-    justify-content: center;
-  }
-
-  .aic {
-    align-items: center;
-  }
-
-  .csp {
-    cursor: pointer;
-  }
 </style>
 
 <!--私有样式-->
 <style scoped>
+
   /*总容器*/
   .indexWrap {
     min-width: 1200px;
@@ -469,6 +427,10 @@ export default {
   }
   .appName:hover{
     background: #53a9ff;
+  }
+
+  .appNameIcon{
+    font-size: 30px;
   }
 
   .appSelected {
@@ -668,6 +630,17 @@ export default {
     box-sizing: border-box;
   }
 
+  /*以下2个样式,是覆盖 element 下拉菜单的默认样式*/
+  .elDropdownMenu{
+    margin-top: 0!important;
+    padding: 3px 0;
+  }
+
+  .elDropdownItem:hover{
+    background-color:#fff!important;
+  }
+
+
   .tabIcon {
     font-size: 20px;
     line-height: 30px;
@@ -699,7 +672,7 @@ export default {
   }
   .tabDropdownLine{
     width: 1px;
-    height: 20px;
+    height: 16px;
     background: #E4E7ED;
   }
 
