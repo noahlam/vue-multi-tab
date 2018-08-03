@@ -644,6 +644,7 @@ export default {
     height: 100vh;
     background: #fff;
     /*border-top: 1px solid #e6e6e6;*/
+    z-index: 999;
   }
 
   .fullRight .content{
