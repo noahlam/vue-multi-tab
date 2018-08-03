@@ -127,20 +127,22 @@
 
           </el-menu>
           <!--左侧主菜单 结束-->
-
-          <!--左侧 隐藏菜单按钮 开始-->
-          <div class="hideMenuButton" v-if="showMenu" @click="showHideMenu(false)">
-            <i class="el-icon-arrow-left"></i>
-          </div>
-          <!--左侧 隐藏菜单按钮 结束-->
-
         </aside>
       </transition>
       <!--左侧 结束-->
 
+
+      <!--左侧 隐藏菜单按钮 开始-->
+      <transition name="hideMenu">
+        <div class="hideMenuButton" v-if="showMenu && !fullScreen" @click="showHideMenu(false)">
+          <i class="el-icon-arrow-left"></i>
+        </div>
+      </transition>
+      <!--左侧 隐藏菜单按钮 结束-->
+
       <!--左侧 显示菜单按钮 开始-->
-      <transition name="showMenu" v-if="!showMenu && !fullScreen">
-        <div class="showMenuButton" @click="showHideMenu(true)">
+      <transition name="showMenu">
+        <div class="showMenuButton" v-if="!showMenu && !fullScreen" @click="showHideMenu(true)">
           <i class="el-icon-arrow-right"></i>
         </div>
       </transition>
@@ -178,7 +180,9 @@
                     </el-dropdown-menu>
                   </el-dropdown>
 
-                <component :is="item.component"></component>
+               <div class="content">
+                 <component :is="item.component"></component>
+               </div>
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -318,7 +322,7 @@ export default {
       this.openedTabs.map(item => {
         item.index !== 'home' && this.currentTabIndexArray.push(item.index)
       })
-      console.log(this.currentTabIndexArray)
+      // console.log(this.currentTabIndexArray)
       location.hash = "#?" + this.currentTabIndexArray.join(';')
     },
     // 跳转到对应的应用
@@ -506,6 +510,18 @@ export default {
     position: relative;
     box-sizing: border-box;
     flex-shrink: 0;
+
+    -ms-overflow-style: none;
+
+    /*-ms-scroll-chaining: chained;*/
+    /*-ms-overflow-style: none;*/
+    /*-ms-content-zooming: zoom;*/
+    /*-ms-scroll-rails: none;*/
+    /*-ms-content-zoom-limit-min: 100%;*/
+    /*-ms-content-zoom-limit-max: 500%;*/
+    /*-ms-scroll-snap-type: proximity;*/
+    /*-ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);*/
+    /*overflow: auto;*/
   }
 
   .left::-webkit-scrollbar {
@@ -563,15 +579,16 @@ export default {
   .hideMenuButton {
     width: 12px;
     height: 50px;
-    background: rgb(3, 10, 19);
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 187px;
     transform: translate(0, -50%);
+
+    background: #030A13;
     border-radius: 10px 0 0 10px;
     display: flex;
-    align-items: center;
     justify-content: flex-start;
+    align-items: center;
     color: #fff;
     z-index: 99;
   }
@@ -580,11 +597,12 @@ export default {
   .showMenuButton {
     width: 12px;
     height: 50px;
-    background: rgb(3, 10, 19);
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 0;
     transform: translate(0, -50%);
+
+    background: #030A13;
     border-radius: 0px 10px 10px 0px;
     display: flex;
     justify-content: flex-end;
@@ -593,9 +611,19 @@ export default {
     z-index: 99;
   }
 
+
+  /*显示/隐藏 按鈕 动画*/
+  .hideMenu-enter-active, .hideMenu-leave-active {
+    transition: all .5s;
+  }
+
+  .hideMenu-enter, .hideMenu-leave-to {
+    left: -12px;
+  }
+
   /*显示/隐藏 按鈕 动画*/
   .showMenu-enter-active, .showMenu-leave-active {
-    transition: opacity .5s;
+    transition: all .5s;
   }
 
   .showMenu-enter, .showMenu-leave-to {
@@ -616,6 +644,12 @@ export default {
     height: 100vh;
     background: #fff;
     /*border-top: 1px solid #e6e6e6;*/
+  }
+
+  .fullRight .content{
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
   }
 
   .tabWrap {
@@ -695,5 +729,11 @@ export default {
 
   .tabDropdownFavor:hover{
     color: #399CFF;
+  }
+  .content{
+    width: 100%;
+    height: calc(100vh - 130px);
+    overflow-y: scroll;
+    box-sizing: border-box;
   }
 </style>

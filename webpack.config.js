@@ -20,7 +20,7 @@ const webpackConfig = {
     }
   },
   devServer: {
-    host: 'localhost',
+    host: '0.0.0.0',
     inline: true,
     port:8848,
     publicPath: '/',
@@ -36,7 +36,8 @@ const webpackConfig = {
   ],
   module: {
     rules: [
-      {test: /\.js$/, exclude: /node_modules/, use: {loader: 'babel-loader',}},
+	    {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
+      // {test: /\.js$/, exclude: /node_modules/, use: {loader: 'babel-loader',}},
       {test: /\.json$/, use: 'json-loader'},
       {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
       {test: /\.vue$/, use: 'vue-loader'},

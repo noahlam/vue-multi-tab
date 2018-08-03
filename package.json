@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "babel-polyfill": "^6.26.0",
     "element-ui": "^2.4.0",
     "miment": "0.0.8",
     "vue": "^2.5.16",
