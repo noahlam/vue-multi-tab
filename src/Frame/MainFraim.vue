@@ -96,7 +96,7 @@
                   <el-dropdown-item v-for="(item,index) in config.favor"
                                     :key="index"
                                     :divided="index === 0" >
-                    <span @click="openTab(item)">{{item.title}}</span>
+                    <span @click="$tab.open(item)">{{item.title}}</span>
                     <i class="el-icon-close ml10" @click="config.removeCollect(item)"></i>
                   </el-dropdown-item>
 
@@ -110,7 +110,7 @@
           <!--左侧主菜单 开始-->
           <el-menu :default-active="currentTabIndex">
 
-            <el-submenu v-for="(item,index) in config.menu" :key="index" :index="item.index">
+            <el-submenu v-for="(item,index) in config.menu" :key="index" :index="item.menuId">
               <template slot="title">
                 <i :class="item.icon"></i>
                 <span>{{item.title}}</span>
@@ -118,8 +118,8 @@
               <el-menu-item-group>
                 <el-menu-item v-for="(subItem,subIndex) in item.sub"
                               :key="subIndex"
-                              @click="openTab(subItem)"
-                              :index="subItem.index">
+                              @click="$tab.open(subItem)"
+                              :index="subItem.menuId">
                   {{subItem.title}}
                 </el-menu-item>
               </el-menu-item-group>
@@ -154,24 +154,24 @@
         <!--打开的菜单(tab-bar) 开始-->
         <div class="tabWrap">
           <div class="tabBar">
-            <el-tabs v-model="currentTabIndex" type="card" @tab-remove="removeTab">
+            <el-tabs :value="currentTabIndex" @input="$tab.setIndex"  type="card" @tab-remove="$tab.close">
 
               <el-tab-pane
                   v-for="(item, index) in openedTabs"
                   :key="index"
                   :label="item.title"
-                  :name="item.index"
-                  :closable="item.index !== 'home'"
+                  :name="item.menuId"
+                  :closable="item.menuId !== 'home'"
               >
                   <el-dropdown  slot="label" placement="bottom">
                    <span>
-                      <i v-if="item.index === 'home'" class="hx hx-hx_zhuye tabIcon"></i>
+                      <i v-if="item.menuId === 'home'" class="hx hx-hx_zhuye tabIcon"></i>
                     <div v-else>{{item.title}}</div>
                    </span>
 
                     <el-dropdown-menu slot="dropdown"
                                       class="elDropdownMenu"
-                                      :class="{hiddenDropDown:item.index !== currentTabIndex}">
+                                      :class="{hiddenDropDown:item.menuId !== currentTabIndex}">
                       <el-dropdown-item class="elDropdownItem">
                         <div class="tabDropdown">
                           <div class="tabDropdownRefresh" @click="reFreshTab(item)">
@@ -200,8 +200,8 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="exitFullScreen" v-if="fullScreen">退出全屏</el-dropdown-item>
                 <el-dropdown-item @click.native="enterFullScreen" v-else>全屏</el-dropdown-item>
-                <el-dropdown-item @click.native="closeAllTabs">关闭全部</el-dropdown-item>
-                <el-dropdown-item @click.native="closeOtherTabs">关闭其他标签</el-dropdown-item>
+                <el-dropdown-item @click.native="$tab.closeAll">关闭全部</el-dropdown-item>
+                <el-dropdown-item @click.native="$tab.closeOthers">关闭其他标签</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
 
@@ -209,8 +209,7 @@
         </div>
 
         <!--打开的菜单(tab-bar) 结束-->
-
-        <!--<router-view></router-view>-->
+        <!--<Router-Views></Router-Views>-->
       </div>
       <!--右侧 结束-->
 
@@ -220,7 +219,7 @@
   </div>
 </template>
 <script>
-import config from './mainconf'
+import config from './MainConf'
 
 export default {
 	data () {
@@ -229,19 +228,17 @@ export default {
 			showMenu: true,          // 是否显示左侧菜单
       fullScreen: false,       // 是否全屏
       searchText:'',           // 搜索框里的文字
-			// 以下是 tab-bar 的数据
-			currentTabIndex: 'home',     // 当前 tab 项的 name
-      currentTabIndexArray:[],     // 当前打开的tab 的 index 集合
-			openedTabs: [                // 当前打开的 tab 列表
-				{
-					title: '首页',                   //  tab 显示标题
-					index: 'home',                   //  tab 内部名称(用来识别当前打开的tab)
-					components: [{ name: 'home' }],  //  tab 对应的组件
-				}
-			],
 		}
 	},
-  computed: {},
+  computed: {
+    // 当前 tab 项的 name
+    currentTabIndex () {
+      return this.$store.getters.GetCurrentTabIndex
+    },
+    openedTabs () {
+      return this.$store.getters.GetOpenedTabs
+    }
+  },
 	methods: {
 		// 显示/隐藏 主菜单
 		showHideMenu (bool) {
@@ -277,60 +274,6 @@ export default {
 		    !isFull && that.exitFullScreen()
 	    }
     },
-    // 删除 tab 项
-    removeTab (index) {
-      this.openedTabs = this.openedTabs.filter(item => {
-        return item.index === 'home' || item.index !== index
-      })
-      this.setHash()
-
-      // 查询当前标签是否被关闭，如果被关闭，则打开主页标签
-      let tab =  this.openedTabs.find(item => item.index === index)
-      if(!tab)   this.currentTabIndex = 'home'
-    },
-    // 打开新的 tab  项
-    openTab (item, fromHash = false) {
-
-      this.currentTabIndex = item.index
-
-      // 判断 tab 项是否已存在
-      if (this.openedTabs.find(i => i.index === item.index)) {
-        return
-      }
-
-      this.openedTabs.push({
-        title: item.title,                    // 显示标题
-        index: item.index,                    // 用于标记当前打开 tab 的 name
-        components: [{name: item.component}],  //  tab 对应的组件
-      })
-
-      if(!fromHash) {
-        this.currentTabIndexArray.push(item.index)
-        this.setHash()
-      }
-    },
-		// 关闭所有 tab
-		closeAllTabs () {
-			this.openedTabs.length = 1
-      this.currentTabIndex = 'home'
-      this.setHash()
-    },
-    // 关闭其他标签
-		closeOtherTabs () {
-			this.openedTabs = this.openedTabs.filter(item => {
-				return item.index === 'home' || item.index === this.currentTabIndex
-      })
-      this.setHash()
-		},
-    // 设置 hash
-    setHash () {
-      this.currentTabIndexArray = []
-      this.openedTabs.map(item => {
-        item.index !== 'home' && this.currentTabIndexArray.push(item.index)
-      })
-      // console.log(this.currentTabIndexArray)
-      location.hash = "#?" + this.currentTabIndexArray.join(';')
-    },
     // 跳转到对应的应用
     gotoApplication (url) {
 		  location.href = url
@@ -344,27 +287,7 @@ export default {
       })
     },
     reShowTabs () {
-      try{
-        let url = location.href
-        let separationIndex = url.indexOf("#?")
-        if(separationIndex < 0)  return
-        let openedTabsName = url.substr(separationIndex + 2)
-        // 要打开的 tab 的 index 数组
-        this.currentTabIndexArray = openedTabsName.split(';')
-        let that = this
-        // 回显
-        this.config.menu.map( menu => {
-          menu.sub && menu.sub.map(submenu => {
-            this.currentTabIndexArray.map( openedTab => {
-              if(openedTab === submenu.index) {
-                that.openTab(submenu,true)
-              }
-            })
-          })
-        })
-      } catch (e) {
-
-      }
+      console.log('记得回显url')
     }
 	},
 	created () {
@@ -383,9 +306,9 @@ export default {
 
 <!--公共样式-->
 <style>
-  @import "~@/styles/cover.css";
-  @import "~@/styles/common.css";
-  @import "~@/styles/iconfont/iconfont.css";
+  @import "~@/Styles/cover.css";
+  @import "~@/Styles/common.css";
+  @import "~@/Styles/iconfont/iconfont.css";
 
 </style>
 

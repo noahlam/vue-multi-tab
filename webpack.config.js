@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackConfig = {
   mode: "development",
   entry: {
-    index: './src/frame/mainfraim.js',
+    index: './src/Frame/Mainfraim.js',
   },
   output: {
     publicPath: "/",
