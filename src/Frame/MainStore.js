@@ -30,12 +30,10 @@ export default {
       let h = '#?' + 'asdfasdf'
       location.hash = h
     },
-
     // 设置 当前显示的 tab name
     SetCurrentTabIndex (state,data) {
       state.currentTabIndex = data
     },
-
     // 添加 tab 到 tab 列表
     OpenedTabsPush (state,item) {
       // 设置当前要显示的 tab name
@@ -54,14 +52,33 @@ export default {
       if(!item.fromHash) store.commit('SetHash')
     },
     // 当前 tab 内部的跳转
-    OpenedSubTabsPush (item) {
+    OpenedSubTabsPush (state,item) {
       state.openedTabs.map(i => {
         if(i.menuId === state.currentTabIndex) {
           i.components.push(item)
         }
       })
     },
+    // 返回
+    OpenedSubTabsBack (state,num = 0) {
+      if (num < 1) num = 1
+      let end = state.openedTabs.length - num
+      state.openedTabs.map(i => {
+        if(i.menuId === state.currentTabIndex && end > 0) {
+          i.components = i.components.slice(0,end)
+        }
+      })
 
+    },
+    // 替换当前组件
+    OpenedSubTabsReplace (state,item) {
+      let index = state.openedTabs.length - 2
+      state.openedTabs.map(i => {
+        if(i.menuId === state.currentTabIndex) {
+         i.components.splice(index,1,item)
+        }
+      })
+    },
     // 从 tab 列表 移除 tab
     OpenedTabsRemove (state,menuId) {
       state.openedTabs = state.openedTabs.filter(item => {
@@ -74,7 +91,6 @@ export default {
 
       store.commit('SetHash')
     },
-
     // 关闭 其他的 tab
     CloseOthersTabs (state) {
       state.openedTabs = state.openedTabs.filter(item => {
@@ -82,7 +98,6 @@ export default {
       })
       store.commit('SetHash')
     },
-
     // 关闭所有 tab
     CloseAllTabs (state) {
       state.openedTabs.length = 1

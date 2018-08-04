@@ -20,7 +20,13 @@ RouterMethods.install = function (Vue, options) {
       store.commit('OpenedTabsRemove',menuId)
     },
     push(item) {
-      store.commit('OpenedSubTabsPush',menuId)
+      store.commit('OpenedSubTabsPush',item)
+    },
+    back(num) {
+      store.commit('OpenedSubTabsBack',num)
+    },
+    replace(item) {
+      store.commit('OpenedSubTabsReplace',item)
     },
     // 关闭所有 tab
     closeAll () {
