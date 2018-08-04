@@ -108,7 +108,7 @@
           <!--搜索和收藏 结束-->
 
           <!--左侧主菜单 开始-->
-          <el-menu>
+          <el-menu :default-active="currentTabIndex">
 
             <el-submenu v-for="(item,index) in config.menu" :key="index" :index="item.index">
               <template slot="title">
@@ -155,6 +155,7 @@
         <div class="tabWrap">
           <div class="tabBar">
             <el-tabs v-model="currentTabIndex" type="card" @tab-remove="removeTab">
+
               <el-tab-pane
                   v-for="(item, index) in openedTabs"
                   :key="index"
@@ -162,10 +163,15 @@
                   :name="item.index"
                   :closable="item.index !== 'home'"
               >
-                  <el-dropdown  slot="label" placement="bottom" v-if="item.index==='home' || currentTabIndex === item.index">
-                    <i v-if="item.index === 'home'" class="hx hx-hx_zhuye tabIcon"></i>
+                  <el-dropdown  slot="label" placement="bottom">
+                   <span>
+                      <i v-if="item.index === 'home'" class="hx hx-hx_zhuye tabIcon"></i>
                     <div v-else>{{item.title}}</div>
-                    <el-dropdown-menu slot="dropdown" class="elDropdownMenu" v-if="item.index!=='home'">
+                   </span>
+
+                    <el-dropdown-menu slot="dropdown"
+                                      class="elDropdownMenu"
+                                      :class="{hiddenDropDown:item.index !== currentTabIndex}">
                       <el-dropdown-item class="elDropdownItem">
                         <div class="tabDropdown">
                           <div class="tabDropdownRefresh" @click="reFreshTab(item)">
@@ -181,7 +187,7 @@
                   </el-dropdown>
 
                <div class="content">
-                 <component :is="item.component"></component>
+                 <component :is="item.components[item.components.length - 1].name"></component>
                </div>
               </el-tab-pane>
             </el-tabs>
@@ -225,12 +231,12 @@ export default {
       searchText:'',           // 搜索框里的文字
 			// 以下是 tab-bar 的数据
 			currentTabIndex: 'home',     // 当前 tab 项的 name
-      currentTabIndexArray:[], // 当前打开的tab 的 index 集合
-			openedTabs: [            // 当前打开的 tab 列表
+      currentTabIndexArray:[],     // 当前打开的tab 的 index 集合
+			openedTabs: [                // 当前打开的 tab 列表
 				{
-					title: '首页',       //  tab 显示标题
-					index: 'home',      //  tab 内部名称(用来识别当前打开的tab)
-					component: 'home'    //  tab 对应的组件
+					title: '首页',                   //  tab 显示标题
+					index: 'home',                   //  tab 内部名称(用来识别当前打开的tab)
+					components: [{ name: 'home' }],  //  tab 对应的组件
 				}
 			],
 		}
@@ -293,10 +299,10 @@ export default {
       }
 
       this.openedTabs.push({
-        title: item.title,          // 显示标题
-        index: item.index,          // 用于标记当前打开 tab 的 name
-        component: item.component,  // tab 里显示的组件
-      });
+        title: item.title,                    // 显示标题
+        index: item.index,                    // 用于标记当前打开 tab 的 name
+        components: [{name: item.component}],  //  tab 对应的组件
+      })
 
       if(!fromHash) {
         this.currentTabIndexArray.push(item.index)
@@ -670,7 +676,10 @@ export default {
     margin-top: 0!important;
     padding: 3px 0;
   }
-
+  /*没有选中的 tab 标签 要隐藏下拉菜单*/
+  .hiddenDropDown{
+    display: none!important;
+  }
   .elDropdownItem:hover{
     background-color:#fff!important;
   }
