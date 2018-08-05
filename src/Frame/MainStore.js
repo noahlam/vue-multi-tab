@@ -1,5 +1,5 @@
 import store from "@/Store";
-
+import {Base64} from 'js-base64'
 export default {
   state: {
     currentTabIndex: 'home',              // 当前显示的 tab
@@ -8,7 +8,7 @@ export default {
       {
         title: '首页',                    //  tab 显示标题
         menuId: 'home',                   //  tab 内部名称(用来识别当前打开的tab)
-        components: [{ name: 'home' }],   //  tab 对应的组件
+        components: [{ path: 'home' }],   //  tab 对应的组件
       }
     ],
   },
@@ -21,14 +21,33 @@ export default {
     GetOpenedTabs (state) {
       return state.openedTabs
     },
-
+    // 获取查询参数
+    GetQuery (state) {
+      let res = Object.create(null)
+      state.openedTabs.map(i => {
+        if(i.menuId === state.currentTabIndex) {
+          let end = i.components.length - 1
+          res =  i.components[end].query || {}
+          return
+        }
+      })
+      return res
+    }
   },
   mutations: {
     // 设置 hash
-    SetHash () {
-      console.log('要记得设置hash啊亲')
-      let h = '#?' + 'asdfasdf'
-      location.hash = h
+    SetHash (state) {
+      let cur = state.openedTabs.find(i => i.menuId === state.currentTabIndex)
+      location.hash = '#' +  Base64.encode(JSON.stringify(cur))
+    },
+    // 回显 tab
+    reShowHash (state) {
+      let url = location.href
+      let indexOfSharp = url.indexOf('#')
+      let hash = url.substr(indexOfSharp + 1)
+      let tab = JSON.parse(Base64.decode(hash))
+      state.openedTabs.push(tab)
+      state.currentTabIndex = tab.menuId
     },
     // 设置 当前显示的 tab name
     SetCurrentTabIndex (state,data) {
@@ -45,7 +64,7 @@ export default {
         state.openedTabs.push({
           title: item.title,                      // 显示标题
           menuId: item.menuId,                    // 用于标记当前打开 tab 的 name
-          components: [{name: item.component}],   //  tab 对应的组件
+          components: [{path: item.component}],   //  tab 对应的组件
         })
       }
 

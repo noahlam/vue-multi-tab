@@ -187,7 +187,7 @@
                   </el-dropdown>
 
                <div class="content">
-                 <component :is="item.components[item.components.length - 1].name"></component>
+                 <component :is="item.components[item.components.length - 1].path"></component>
                </div>
               </el-tab-pane>
             </el-tabs>
@@ -286,14 +286,11 @@ export default {
         item.component = c
       })
     },
-    reShowTabs () {
-      console.log('记得回显url')
-    }
 	},
 	created () {
+    this.$tab.reShow()
 		this.listenEvent()
     config.onInit()
-    this.reShowTabs()
 	},
   mounted() {
     config.onShow()
