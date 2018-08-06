@@ -74,7 +74,6 @@ RouterMethods.install = function (Vue, options) {
     },
     // 获取当前组件的查询参数
     query () {
-      console.log('methods',store.getters.GetQuery)
       return store.getters.GetQuery
     }
   }

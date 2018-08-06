@@ -2,7 +2,7 @@ import  "babel-polyfill";   // 兼容IE
 
 import Vue from 'vue'
 import store from '@/Store/index'
-import index from './MainFraim.vue'
+import index from './MainFrame.vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import TabRoute from '@/Router/TabRoute'

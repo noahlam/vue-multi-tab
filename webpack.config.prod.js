@@ -7,7 +7,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin') //开启多线程进�
 module.exports = {
   mode: "production",
   entry: {
-    index: './src/Frame/Mainfraim.js',
+    index: './src/Frame/MainFrame.js',
   },
   output: {
     publicPath: "/",

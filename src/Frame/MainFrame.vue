@@ -6,7 +6,7 @@
       <div class="dsf">
         <!--logo 开始-->
         <div class="topLogo">
-          <img class="topLogo-img" :src="config.logoUrl" />
+          <img class="topLogo-img" :src="config.logoUrl"/>
         </div>
         <!--logo 结束-->
 
@@ -16,7 +16,7 @@
             <span class="appSelected">
               <i class="hx hx-hx_yingyongfenleiqita appNameIcon"></i>
             </span>
-            <el-dropdown-menu slot="dropdown" >
+            <el-dropdown-menu slot="dropdown">
               <el-dropdown-item disabled>我的应用</el-dropdown-item>
               <el-dropdown-item v-for="(item,index) in config.application"
                                 :key="index"
@@ -42,16 +42,16 @@
         <div class="projectName">
           {{config.customerCompany}}
           <!--<el-dropdown>-->
-            <!--<span class="mlr30 cfff">-->
-              <!--宁德市药械联合限价采购平台<i class="el-icon-arrow-down ml10"></i>-->
-            <!--</span>-->
-            <!--<el-dropdown-menu slot="dropdown">-->
-              <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
-              <!--<el-dropdown-item>三明市药械联合限价采购平台</el-dropdown-item>-->
-              <!--<el-dropdown-item>福州市药械联合限价采购招标项目</el-dropdown-item>-->
-              <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
-              <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
-            <!--</el-dropdown-menu>-->
+          <!--<span class="mlr30 cfff">-->
+          <!--宁德市药械联合限价采购平台<i class="el-icon-arrow-down ml10"></i>-->
+          <!--</span>-->
+          <!--<el-dropdown-menu slot="dropdown">-->
+          <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
+          <!--<el-dropdown-item>三明市药械联合限价采购平台</el-dropdown-item>-->
+          <!--<el-dropdown-item>福州市药械联合限价采购招标项目</el-dropdown-item>-->
+          <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
+          <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
+          <!--</el-dropdown-menu>-->
           <!--</el-dropdown>-->
         </div>
         <!--用户信息-->
@@ -85,7 +85,7 @@
           <!--搜索和收藏 开始-->
           <header class="searchAndFavor">
             <el-input placeholder="请输入内容" size="mini" v-model="searchText">
-              <i class="el-icon-search searchiIcon" slot="suffix" @click="config.onSearch(searchText)"></i>
+              <i class="el-icon-search searchiIcon" slot="suffix"></i>
             </el-input>
             <div class="myFavor">
               <el-dropdown placement="bottom">
@@ -95,8 +95,8 @@
 
                   <el-dropdown-item v-for="(item,index) in config.favor"
                                     :key="index"
-                                    :divided="index === 0" >
-                    <span @click="$tab.open(item)">{{item.title}}</span>
+                                    :divided="index === 0">
+                    <span @click="openTab(item)">{{item.title}}</span>
                     <i class="el-icon-close ml10" @click="config.removeCollect(item)"></i>
                   </el-dropdown-item>
 
@@ -108,9 +108,9 @@
           <!--搜索和收藏 结束-->
 
           <!--左侧主菜单 开始-->
-          <el-menu :default-active="currentTabIndex">
+          <el-menu :default-active="currentTabIndex" :default-openeds="spreadedMenus">
 
-            <el-submenu v-for="(item,index) in config.menu" :key="index" :index="item.menuId">
+            <el-submenu v-for="(item,index) in menuList" :key="index" :index="item.menuId">
               <template slot="title">
                 <i :class="item.icon"></i>
                 <span>{{item.title}}</span>
@@ -118,7 +118,7 @@
               <el-menu-item-group>
                 <el-menu-item v-for="(subItem,subIndex) in item.sub"
                               :key="subIndex"
-                              @click="$tab.open(subItem)"
+                              @click="openTab(subItem)"
                               :index="subItem.menuId">
                   {{subItem.title}}
                 </el-menu-item>
@@ -154,7 +154,7 @@
         <!--打开的菜单(tab-bar) 开始-->
         <div class="tabWrap">
           <div class="tabBar">
-            <el-tabs :value="currentTabIndex" @input="$tab.setIndex"  type="card" @tab-remove="$tab.close">
+            <el-tabs :value="currentTabIndex" @input="$tab.setIndex" type="card" @tab-remove="$tab.close">
 
               <el-tab-pane
                   v-for="(item, index) in openedTabs"
@@ -163,32 +163,32 @@
                   :name="item.menuId"
                   :closable="item.menuId !== 'home'"
               >
-                  <el-dropdown  slot="label" placement="bottom">
+                <el-dropdown slot="label" placement="bottom">
                    <span>
                       <i v-if="item.menuId === 'home'" class="hx hx-hx_zhuye tabIcon"></i>
                     <div v-else>{{item.title}}</div>
                    </span>
 
-                    <el-dropdown-menu slot="dropdown"
-                                      class="elDropdownMenu"
-                                      :class="{hiddenDropDown:item.menuId !== currentTabIndex}">
-                      <el-dropdown-item class="elDropdownItem">
-                        <div class="tabDropdown">
-                          <div class="tabDropdownRefresh" @click="reFreshTab(item)">
-                            <i class="hx hx-hx_xshuaxin"></i> 刷新
-                          </div>
-                          <div class="tabDropdownLine"></div>
-                          <div class="tabDropdownFavor" @click="config.addCollect(item)">
-                            <i class="hx hx-hx_xshoucang"></i> 收藏
-                          </div>
+                  <el-dropdown-menu slot="dropdown"
+                                    class="elDropdownMenu"
+                                    :class="{hiddenDropDown:item.menuId !== currentTabIndex}">
+                    <el-dropdown-item class="elDropdownItem">
+                      <div class="tabDropdown">
+                        <div class="tabDropdownRefresh" @click="reFreshTab(item)">
+                          <i class="hx hx-hx_xshuaxin"></i> 刷新
                         </div>
-                      </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
+                        <div class="tabDropdownLine"></div>
+                        <div class="tabDropdownFavor" @click="config.addCollect(item)">
+                          <i class="hx hx-hx_xshoucang"></i> 收藏
+                        </div>
+                      </div>
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
 
-               <div class="content">
-                 <component :is="item.components[item.components.length - 1].path"></component>
-               </div>
+                <div class="content">
+                  <component :is="item.components[item.components.length - 1].path"></component>
+                </div>
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -219,86 +219,118 @@
   </div>
 </template>
 <script>
-import config from './MainConf'
+  import config from './MainConf'
 
-export default {
-	data () {
-		return {
-			config: config,          // 全局配置
-			showMenu: true,          // 是否显示左侧菜单
-      fullScreen: false,       // 是否全屏
-      searchText:'',           // 搜索框里的文字
-		}
-	},
-  computed: {
-    // 当前 tab 项的 name
-    currentTabIndex () {
-      return this.$store.getters.GetCurrentTabIndex
+  export default {
+    data() {
+      return {
+        config: config,          // 全局配置
+        showMenu: true,          // 是否显示左侧菜单
+        fullScreen: false,       // 是否全屏
+        searchText: '',           // 搜索框里的文字
+        menuList: [],            // 复制一份菜单列表
+        spreadedMenus: [],        // 要展开的菜单列表
+      }
     },
-    openedTabs () {
-      return this.$store.getters.GetOpenedTabs
-    }
-  },
-	methods: {
-		// 显示/隐藏 主菜单
-		showHideMenu (bool) {
-			this.showMenu = bool
-		},
-    // 全屏
-		enterFullScreen () {
-			let element = this.$refs['right']
-			var requestMethod = element.requestFullScreen ||
-				element.webkitRequestFullScreen ||
-				element.mozRequestFullScreen ||
-				element.msRequestFullScreen;
-			document.body.width = 1920
-			document.body.height = 1080
-			requestMethod.call(document.body);
-			this.fullScreen = true
-		},
-		// 退出全屏
-		exitFullScreen () {
-			this.fullScreen = false
-			var exitMethod = document.exitFullscreen ||
-				document.mozCancelFullScreen ||
-				document.webkitExitFullscreen ||
-				document.msExitFullScreen;
-			exitMethod.call(document);
-		},
-    // 监听 ESC 按键
-    listenEvent () {
-	    let that = this
+    computed: {
+      // 当前 tab 项的 name
+      currentTabIndex() {
+        return this.$store.getters.GetCurrentTabIndex
+      },
+      // 打开的页签列表
+      openedTabs() {
+        return this.$store.getters.GetOpenedTabs
+      },
+    },
+    watch: {
+      searchText () {
+        this.filterMenu()
+      }
+    },
+    methods: {
+      // 显示/隐藏 主菜单
+      showHideMenu(bool) {
+        this.showMenu = bool
+      },
+      // 全屏
+      enterFullScreen() {
+        let element = this.$refs['right']
+        var requestMethod = element.requestFullScreen ||
+          element.webkitRequestFullScreen ||
+          element.mozRequestFullScreen ||
+          element.msRequestFullScreen;
+        document.body.width = 1920
+        document.body.height = 1080
+        requestMethod.call(document.body);
+        this.fullScreen = true
+      },
+      // 退出全屏
+      exitFullScreen() {
+        this.fullScreen = false
+        var exitMethod = document.exitFullscreen ||
+          document.mozCancelFullScreen ||
+          document.webkitExitFullscreen ||
+          document.msExitFullScreen;
+        exitMethod.call(document);
+      },
       // 监听 ESC 按键
-	    window.onresize = function(){
-		    let isFull = document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled || false
-		    !isFull && that.exitFullScreen()
-	    }
+      listenEvent() {
+        let that = this
+        // 监听 ESC 按键
+        window.onresize = function () {
+          let isFull = document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled || false
+          !isFull && that.exitFullScreen()
+        }
+      },
+      // 跳转到对应的应用
+      gotoApplication(url) {
+        location.href = url
+      },
+      // 刷新组件
+      reFreshTab(item) {
+        let c = item.component
+        item.component = null
+        this.$nextTick(() => {
+          item.component = c
+        })
+      },
+      // 打开 页签
+      openTab (item) {
+        this.$tab.open(item)
+        this.initializeMemu()
+      },
+      // 搜索菜单
+      filterMenu() {
+        let that = this
+        this.spreadedMenus = []
+        let keyword = this.searchText
+        let menu = JSON.parse(JSON.stringify(this.config.menu))
+        let newMenu = menu.filter(item => {
+          item.sub = item.sub.filter(i => {
+            return i.title.indexOf(keyword) > -1
+          })
+          return item.sub.length > 0 && this.spreadedMenus.push(item.menuId)
+        })
+        this.menuList = newMenu
+
+      },
+      initializeMemu() {
+        this.menuList = JSON.parse(JSON.stringify(this.config.menu))
+      }
     },
-    // 跳转到对应的应用
-    gotoApplication (url) {
-		  location.href = url
+    created() {
+      this.$tab.reShow()
+      this.listenEvent()
+      this.initializeMemu()
+      config.onInit()
     },
-    // 刷新组件
-    reFreshTab (item) {
-		  let c = item.component
-      item.component = null
-      this.$nextTick(() => {
-        item.component = c
-      })
+    mounted() {
+      config.onShow()
     },
-	},
-	created () {
-    this.$tab.reShow()
-		this.listenEvent()
-    config.onInit()
-	},
-  mounted() {
-    config.onShow()
-  },
-  beforeDestroy() {
-	  config.onDistory()
+    beforeDestroy() {
+      config.onDistory()
+    }
   }
-}
 </script>
 
 <!--公共样式-->
@@ -340,9 +372,11 @@ export default {
     color: #fff;
     box-sizing: border-box;
   }
-  .topLogo-img{
+
+  .topLogo-img {
     height: 30px;
   }
+
   /*应用选择*/
   .appName {
     display: flex;
@@ -355,11 +389,12 @@ export default {
     color: #fff;
     border-right: 1px solid #53a9ff;
   }
-  .appName:hover{
+
+  .appName:hover {
     background: #53a9ff;
   }
 
-  .appNameIcon{
+  .appNameIcon {
     font-size: 30px;
   }
 
@@ -372,7 +407,8 @@ export default {
     display: flex;
     align-items: center;
   }
-  .appItem-icon{
+
+  .appItem-icon {
     margin-right: 5px;
     font-size: 16px;
   }
@@ -397,14 +433,17 @@ export default {
   .userInfoWrap {
     padding-left: 10px;
   }
-  .userInfoWrap:hover{
+
+  .userInfoWrap:hover {
     background: #53a9ff;
   }
+
   .userInfo {
     margin: 12px 0;
     display: flex;
     align-items: center;
   }
+
   .avatar {
     width: 40px;
     height: 40px;
@@ -490,7 +529,8 @@ export default {
     align-items: center;
     margin-left: 10px;
   }
-  .myFavor:hover{
+
+  .myFavor:hover {
     background: #3d76bc;
   }
 
@@ -499,7 +539,6 @@ export default {
     font-size: 20px;
     line-height: 28px;
   }
-
 
   /*隐藏菜单 按钮*/
   .hideMenuButton {
@@ -537,7 +576,6 @@ export default {
     z-index: 99;
   }
 
-
   /*显示/隐藏 按鈕 动画*/
   .hideMenu-enter-active, .hideMenu-leave-active {
     transition: all .5s;
@@ -562,9 +600,10 @@ export default {
     background: #fff;
     border-top: 1px solid #e6e6e6;
   }
-  .fullRight{
+
+  .fullRight {
     position: fixed;
-    top:0;
+    top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
@@ -573,7 +612,7 @@ export default {
     z-index: 999;
   }
 
-  .fullRight .content{
+  .fullRight .content {
     width: 100vw;
     height: 100vh;
     overflow-y: scroll;
@@ -592,18 +631,19 @@ export default {
   }
 
   /*以下2个样式,是覆盖 element 下拉菜单的默认样式*/
-  .elDropdownMenu{
-    margin-top: 0!important;
+  .elDropdownMenu {
+    margin-top: 0 !important;
     padding: 3px 0;
   }
+
   /*没有选中的 tab 标签 要隐藏下拉菜单*/
-  .hiddenDropDown{
-    display: none!important;
-  }
-  .elDropdownItem:hover{
-    background-color:#fff!important;
+  .hiddenDropDown {
+    display: none !important;
   }
 
+  .elDropdownItem:hover {
+    background-color: #fff !important;
+  }
 
   .tabIcon {
     font-size: 20px;
@@ -634,7 +674,8 @@ export default {
     font-size: 20px;
     margin-right: 5px;
   }
-  .tabDropdownLine{
+
+  .tabDropdownLine {
     width: 1px;
     height: 16px;
     background: #E4E7ED;
@@ -647,7 +688,8 @@ export default {
     display: flex;
     align-items: center;
   }
-  .tabDropdownRefresh:hover{
+
+  .tabDropdownRefresh:hover {
     color: #399CFF;
   }
 
@@ -657,10 +699,11 @@ export default {
     padding-left: 10px;
   }
 
-  .tabDropdownFavor:hover{
+  .tabDropdownFavor:hover {
     color: #399CFF;
   }
-  .content{
+
+  .content {
     width: 100%;
     height: calc(100vh - 130px);
     overflow-y: scroll;

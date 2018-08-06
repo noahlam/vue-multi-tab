@@ -44,14 +44,17 @@ export default {
     reShowHash (state) {
       let url = location.href
       let indexOfSharp = url.indexOf('#')
-      let hash = url.substr(indexOfSharp + 1)
-      let tab = JSON.parse(Base64.decode(hash))
-      state.openedTabs.push(tab)
-      state.currentTabIndex = tab.menuId
+      if(indexOfSharp > -1) {
+        let hash = url.substr(indexOfSharp + 1)
+        let tab = JSON.parse(Base64.decode(hash))
+        state.openedTabs.push(tab)
+        state.currentTabIndex = tab.menuId
+      }
     },
     // 设置 当前显示的 tab name
     SetCurrentTabIndex (state,data) {
       state.currentTabIndex = data
+      store.commit('SetHash')
     },
     // 添加 tab 到 tab 列表
     OpenedTabsPush (state,item) {
@@ -81,13 +84,14 @@ export default {
     // 返回
     OpenedSubTabsBack (state,num = 0) {
       if (num < 1) num = 1
-      let end = state.openedTabs.length - num
       state.openedTabs.map(i => {
-        if(i.menuId === state.currentTabIndex && end > 0) {
-          i.components = i.components.slice(0,end)
+        if(i.menuId === state.currentTabIndex) {
+          let newLength = i.components.length - num
+          if(newLength > 0) {
+            i.components = i.components.slice(0,newLength)
+          }
         }
       })
-
     },
     // 替换当前组件
     OpenedSubTabsReplace (state,item) {
