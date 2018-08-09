@@ -219,118 +219,134 @@
   </div>
 </template>
 <script>
-  import config from './MainConf'
+import config from './MainConf'
 
-  export default {
-    data() {
-      return {
-        config: config,          // 全局配置
-        showMenu: true,          // 是否显示左侧菜单
-        fullScreen: false,       // 是否全屏
-        searchText: '',           // 搜索框里的文字
-        menuList: [],            // 复制一份菜单列表
-        spreadedMenus: [],        // 要展开的菜单列表
-      }
-    },
-    computed: {
-      // 当前 tab 项的 name
-      currentTabIndex() {
-        return this.$store.getters.GetCurrentTabIndex
-      },
-      // 打开的页签列表
-      openedTabs() {
-        return this.$store.getters.GetOpenedTabs
-      },
-    },
-    watch: {
-      searchText () {
-        this.filterMenu()
-      }
-    },
-    methods: {
-      // 显示/隐藏 主菜单
-      showHideMenu(bool) {
-        this.showMenu = bool
-      },
-      // 全屏
-      enterFullScreen() {
-        let element = this.$refs['right']
-        var requestMethod = element.requestFullScreen ||
-          element.webkitRequestFullScreen ||
-          element.mozRequestFullScreen ||
-          element.msRequestFullScreen;
-        document.body.width = 1920
-        document.body.height = 1080
-        requestMethod.call(document.body);
-        this.fullScreen = true
-      },
-      // 退出全屏
-      exitFullScreen() {
-        this.fullScreen = false
-        var exitMethod = document.exitFullscreen ||
-          document.mozCancelFullScreen ||
-          document.webkitExitFullscreen ||
-          document.msExitFullScreen;
-        exitMethod.call(document);
-      },
-      // 监听 ESC 按键
-      listenEvent() {
-        let that = this
-        // 监听 ESC 按键
-        window.onresize = function () {
-          let isFull = document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled || false
-          !isFull && that.exitFullScreen()
-        }
-      },
-      // 跳转到对应的应用
-      gotoApplication(url) {
-        location.href = url
-      },
-      // 刷新组件
-      reFreshTab(item) {
-        let c = item.component
-        item.component = null
-        this.$nextTick(() => {
-          item.component = c
-        })
-      },
-      // 打开 页签
-      openTab (item) {
-        this.$tab.open(item)
-        this.initializeMemu()
-      },
-      // 搜索菜单
-      filterMenu() {
-        let that = this
-        this.spreadedMenus = []
-        let keyword = this.searchText
-        let menu = JSON.parse(JSON.stringify(this.config.menu))
-        let newMenu = menu.filter(item => {
-          item.sub = item.sub.filter(i => {
-            return i.title.indexOf(keyword) > -1
-          })
-          return item.sub.length > 0 && this.spreadedMenus.push(item.menuId)
-        })
-        this.menuList = newMenu
+export default {
+	data () {
+		return {
+			config: config,          // 全局配置
+			showMenu: true,          // 是否显示左侧菜单
+			fullScreen: false,       // 是否全屏
+			searchText: '',           // 搜索框里的文字
+			menuList: [],            // 复制一份菜单列表
+			spreadedMenus: [],        // 要展开的菜单列表
+		}
+	},
+	computed: {
+		// 当前 tab 项的 name
+		currentTabIndex () {
+			return this.$store.getters.GetCurrentTabIndex
+		},
+		// 打开的页签列表
+		openedTabs () {
+			return this.$store.getters.GetOpenedTabs
+		},
+	},
+	watch: {
+		searchText () {
+			this.filterMenu()
+		}
+	},
+	methods: {
+		// 显示/隐藏 主菜单
+		showHideMenu (bool) {
+			this.showMenu = bool
+		},
+		// 全屏
+		enterFullScreen () {
+			let element = this.$refs['right']
+			var requestMethod = element.requestFullScreen ||
+				element.webkitRequestFullScreen ||
+				element.mozRequestFullScreen ||
+				element.msRequestFullScreen;
+			document.body.width = 1920
+			document.body.height = 1080
+			requestMethod.call(document.body);
+			this.fullScreen = true
+		},
+		// 退出全屏
+		exitFullScreen () {
+			this.fullScreen = false
+			var exitMethod = document.exitFullscreen ||
+				document.mozCancelFullScreen ||
+				document.webkitExitFullscreen ||
+				document.msExitFullScreen;
+			exitMethod.call(document);
+		},
+		// 监听 ESC 按键
+		listenKeyBoardEvent () {
+			let that = this
+			// 监听 ESC 按键
+			window.onresize = function () {
+				let isFull = document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled || false
+				!isFull && that.exitFullScreen()
+			}
+		},
+		// 跳转到对应的应用
+		gotoApplication (url) {
+			location.href = url
+		},
+		// 刷新组件
+		reFreshTab (item) {
+			let c = item.component
+			item.component = null
+			this.$nextTick(() => {
+				item.component = c
+			})
+		},
+		// 打开 页签
+		openTab (item) {
+			this.$tab.open(item)
+			this.initializeMemu()
+		},
+		// 搜索菜单
+		filterMenu () {
+			let that = this
+			this.spreadedMenus = []
+			let keyword = this.searchText
+			let menu = JSON.parse(JSON.stringify(this.config.menu))
+			let newMenu = menu.filter(item => {
+				item.sub = item.sub.filter(i => {
+					return i.title.indexOf(keyword) > -1
+				})
+				return item.sub.length > 0 && this.spreadedMenus.push(item.menuId)
+			})
+			this.menuList = newMenu
 
-      },
-      initializeMemu() {
-        this.menuList = JSON.parse(JSON.stringify(this.config.menu))
-      }
-    },
-    created() {
-      this.$tab.reShow()
-      this.listenEvent()
-      this.initializeMemu()
-      config.onInit()
-    },
-    mounted() {
-      config.onShow()
-    },
-    beforeDestroy() {
-      config.onDistory()
-    }
-  }
+		},
+		initializeMemu () {
+			this.menuList = JSON.parse(JSON.stringify(this.config.menu))
+		},
+		// 监听hash的变动
+		listenHistory () {
+			window.addEventListener('hashchange', (e) => {
+				console.log('控制台打印:hashchange')
+				let url = location.href
+				let indexOfSharp = url.indexOf('#')
+				if (indexOfSharp > 0) {
+					let hash = url.substr(indexOfSharp + 1)
+					let tab = JSON.parse(Base64.decode(hash))
+          if(tab.fromHistory) return
+          tab.fromHistory = true
+					this.$tab.open(tab)
+				}
+			})
+		},
+	},
+		created () {
+			this.$tab.reShow()
+			this.listenKeyBoardEvent()
+			this.initializeMemu()
+      this.listenHistory()
+			config.onInit()
+		},
+		mounted () {
+			config.onShow()
+		},
+		beforeDestroy () {
+			config.onDistory()
+		}
+	}
 </script>
 
 <!--公共样式-->
