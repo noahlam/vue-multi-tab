@@ -30,6 +30,10 @@
   padding-right: 10px;
 }
 
+.ptb20 {
+  padding: 20px 0;
+}
+
 .dsf {
   display: flex;
 }
@@ -38,10 +42,18 @@
   justify-content: center;
 }
 
+.jcb {
+  justify-content: space-between;
+}
+
 .aic {
   align-items: center;
 }
 
 .csp {
   cursor: pointer;
+}
+
+.bdb{
+  border-bottom: 1px solid #ebeef5;
 }

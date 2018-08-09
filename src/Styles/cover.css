@@ -55,3 +55,9 @@ body:-webkit-full-screen {
 .fullRight > .tabWrap > .tabOperate {
   display: none;
 }
+
+
+/*表头样式*/
+.el-table th{
+  background: #f2f6fc !important;
+}

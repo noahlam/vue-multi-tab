@@ -16,7 +16,7 @@
       }
     },
     created() {
-      console.log('路由查询参数',this.$tab.query())
+      // console.log('路由查询参数',this.$tab.query())
     },
   }
 </script>
