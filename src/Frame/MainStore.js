@@ -39,19 +39,25 @@ export default {
     SetHash (state) {
       let cur = state.openedTabs.find(i => i.menuId === state.currentTabIndex)
       location.hash = '#' +  Base64.encode(JSON.stringify(cur))
+	    // location.hash = '#' +  JSON.stringify(cur)
     },
     // 回显 tab
     reShowHash (state) {
-      let url = location.href
-      let indexOfSharp = url.indexOf('#')
-      let hash = url.substr(indexOfSharp + 1)
-      let tab = JSON.parse(Base64.decode(hash))
-      state.openedTabs.push(tab)
-      state.currentTabIndex = tab.menuId
+	      let url = location.href
+	      let indexOfSharp = url.indexOf('#')
+	      let hash = url.substr(indexOfSharp + 1)
+	      let tab = JSON.parse(Base64.decode(hash))
+	      // let tab = JSON.parse(hash)
+        if(tab.menuId === 'home') {
+	        state.openedTabs = state.openedTabs.filter(i => i.menuId !== 'home')
+        }
+	      state.openedTabs.push(tab)
+	      state.currentTabIndex = tab.menuId
     },
     // 设置 当前显示的 tab name
     SetCurrentTabIndex (state,data) {
       state.currentTabIndex = data
+	    store.commit('SetHash')
     },
     // 添加 tab 到 tab 列表
     OpenedTabsPush (state,item) {
@@ -77,6 +83,7 @@ export default {
           i.components.push(item)
         }
       })
+	    store.commit('SetHash')
     },
     // 返回
     OpenedSubTabsBack (state,num = 0) {
@@ -87,7 +94,7 @@ export default {
           i.components = i.components.slice(0,end)
         }
       })
-
+	    store.commit('SetHash')
     },
     // 替换当前组件
     OpenedSubTabsReplace (state,item) {
@@ -97,6 +104,7 @@ export default {
          i.components.splice(index,1,item)
         }
       })
+	    store.commit('SetHash')
     },
     // 从 tab 列表 移除 tab
     OpenedTabsRemove (state,menuId) {
