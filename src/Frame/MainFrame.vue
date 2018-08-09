@@ -161,11 +161,11 @@
                   :key="index"
                   :label="item.title"
                   :name="item.menuId"
-                  :closable="item.menuId !== 'home'"
+                  :closable="item.menuId !== homeTabMenuId"
               >
                 <el-dropdown slot="label" placement="bottom">
                    <span>
-                      <i v-if="item.menuId === 'home'" class="hx hx-hx_zhuye tabIcon"></i>
+                      <i v-if="item.menuId === homeTabMenuId" class="hx hx-hx_zhuye tabIcon"></i>
                     <div v-else>{{item.title}}</div>
                    </span>
 
@@ -239,8 +239,13 @@ export default {
 		},
 		// 打开的页签列表
 		openedTabs () {
+			console.log(this.$store.getters.GetOpenedTabs)
 			return this.$store.getters.GetOpenedTabs
 		},
+    // 主页 tab 的 menuId
+    homeTabMenuId () {
+			return this.$store.getters.GetHomeTabMenuId
+    }
 	},
 	watch: {
 		searchText () {
@@ -320,7 +325,6 @@ export default {
 		// 监听hash的变动
 		listenHistory () {
 			window.addEventListener('hashchange', (e) => {
-				console.log('控制台打印:hashchange')
 				let url = location.href
 				let indexOfSharp = url.indexOf('#')
 				if (indexOfSharp > 0) {

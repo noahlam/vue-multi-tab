@@ -1,13 +1,10 @@
 <template>
   <div class="wrap">
-    <TableList />
-
+    我是首页
   </div>
 </template>
 <script>
-  import TableList from '@/Components/Table/TableList'
   export default {
-    components: {TableList},
     data() {
       return {
       }

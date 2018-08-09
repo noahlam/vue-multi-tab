@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let server = "http://gwhl.haitaogoods.com/"; //后端转发服务器地址
+let server = "http://sss.xxxxxx.com/"; //后端转发服务器地址
 
 
 let post = async function (url, body={}) {

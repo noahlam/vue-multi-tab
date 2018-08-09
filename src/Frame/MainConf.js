@@ -92,6 +92,13 @@ export default {
     }
   ],
 
+  // 主页 tab 配置
+  homeTab: {
+	  title: '首页',                     //  tab 显示标题
+	  menuId: 'home',                   //  tab 内部名称(用来识别当前打开的tab)
+	  components: [{path: 'home'}],     //  tab 对应的组件
+  },
+
   // 函数配置
 
   /**

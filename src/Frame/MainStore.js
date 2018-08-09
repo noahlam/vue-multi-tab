@@ -1,22 +1,23 @@
 import store from "@/Store";
+import conf from './MainConf'
 import {Base64} from 'js-base64'
 
 export default {
 	state: {
-		currentTabIndex: 'home',              // 当前显示的 tab
-
+		currentTabIndex: conf.homeTab.menuId, // 当前显示的 tab
+		homeTabMenuId: conf.homeTab.menuId,   // 主页 tab 的 menuId
 		openedTabs: [                         // 当前打开的 tab 列表
-			{
-				title: '首页',                    //  tab 显示标题
-				menuId: 'home',                   //  tab 内部名称(用来识别当前打开的tab)
-				components: [{path: 'home'}],   //  tab 对应的组件
-			}
+			conf.homeTab
 		],
 	},
 	getters: {
 		// 获取 当前显示的 tab name
 		GetCurrentTabIndex (state) {
 			return state.currentTabIndex
+		},
+		// 获取 主页 tab 的 menuId
+		GetHomeTabMenuId (state) {
+			return state.homeTabMenuId
 		},
 		// 获取 当前打开的 tab 列表
 		GetOpenedTabs (state) {
@@ -42,6 +43,11 @@ export default {
 			location.hash = '#' + Base64.encode(JSON.stringify(cur))
 			// location.hash = '#' +  JSON.stringify(cur)
 		},
+		// 设置 主页 tab
+		SetHomeTab (state,item) {
+			state.homeTabMenuId = item.menuId
+			state.openedTabs[0] = item
+		},
 		// 回显 tab
 		reShowHash (state) {
 			let url = location.href
@@ -50,8 +56,8 @@ export default {
 				let hash = url.substr(indexOfSharp + 1)
 				let tab = JSON.parse(Base64.decode(hash))
 				// let tab = JSON.parse(hash)
-				if (tab.menuId === 'home') {
-					state.openedTabs = state.openedTabs.filter(i => i.menuId !== 'home')
+				if (tab.menuId === state.homeTabMenuId) {
+					state.openedTabs = state.openedTabs.filter(i => i.menuId !== state.homeTabMenuId)
 				}
 				state.openedTabs.push(tab)
 				state.currentTabIndex = tab.menuId
@@ -120,26 +126,26 @@ export default {
 		// 从 tab 列表 移除 tab
 		OpenedTabsRemove (state, menuId) {
 			state.openedTabs = state.openedTabs.filter(item => {
-				return item.menuId === 'home' || item.menuId !== menuId
+				return item.menuId === state.homeTabMenuId || item.menuId !== menuId
 			})
 
 			// 查询当前标签是否被关闭，如果被关闭，则打开主页标签
 			let tab = state.openedTabs.find(item => item.menuId === menuId)
-			if (!tab) state.currentTabIndex = 'home'
+			if (!tab) state.currentTabIndex = state.homeTabMenuId
 
 			store.commit('SetHash')
 		},
 		// 关闭 其他的 tab
 		CloseOthersTabs (state) {
 			state.openedTabs = state.openedTabs.filter(item => {
-				return item.menuId === 'home' || item.menuId === state.currentTabIndex
+				return item.menuId === state.homeTabMenuId || item.menuId === state.currentTabIndex
 			})
 			store.commit('SetHash')
 		},
 		// 关闭所有 tab
 		CloseAllTabs (state) {
 			state.openedTabs.length = 1
-			state.currentTabIndex = 'home'
+			state.currentTabIndex = state.homeTabMenuId
 			store.commit('SetHash')
 		},
 	},
