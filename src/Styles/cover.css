@@ -58,6 +58,10 @@ body:-webkit-full-screen {
 
 
 /*表头样式*/
-.el-table th{
+.el-table.bgt th{
   background: #f2f6fc !important;
+}
+
+.el-input--medium, .el-select--medium{
+  height: 36px;
 }

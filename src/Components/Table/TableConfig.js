@@ -2,6 +2,33 @@ export default {
   id: '表格唯一的id，在获取表格的历史查询，或保存收藏数据时将使用到',
   dataUrl: '', //数据加载的地址，访会址可以接收一个json对象，对象的key为过滤字段的name,另外_page,_pagesize为页码与每页大小值，_sort为当前排序的字段的name,
 // _sortflag: 'asc|desc' 表示当前排序的方向,_tableid表示当前表格的id,_collect:true/false表示是否加载收藏的数据。
+  listData: [
+    {
+      files1: 'files1',
+      files11: 'files11',
+      files2: 'files2',
+      files21: 'files21',
+      files3: 'files3',
+      files31: 'files31'
+    },
+    {
+      files1: 'files12',
+      files11: 'files112',
+      files2: 'files22',
+      files21: 'files212',
+      files3: 'files32',
+      files31: 'files312'
+    },
+    {
+      files1: 'files13',
+      files11: 'files113',
+      files2: 'files23',
+      files21: 'files213',
+      files3: 'files33',
+      files31: 'files313'
+    },
+  ],
+
   columns: [
     {
       name: 'files1', //值对对应行记录对象的字段名,
@@ -30,15 +57,22 @@ export default {
   ],
   actions: [
     {
-      text: '按钮', //文本,
-      type: 'onerow|batch|normal', //按钮的模式onerow只有选中一行时才能点击，batch需要选中大于1条，normal一直可操作，默认为normal
-      tooltip: '', //可使用时的正常提示，如果不可用时显示tooltip时可以在正常tooltip后附加不可用的原因或指导操作，例如“删除记录,致少选择一行"
+      text: '选择一条', //文本,
+      type: 'onerow', //onerow|batch|normal按钮的模式onerow只有选中一行时才能点击，batch需要选中大于1条，normal一直可操作，默认为normal
+      tooltip: '第一个', //可使用时的正常提示，如果不可用时显示tooltip时可以在正常tooltip后附加不可用的原因或指导操作，例如“删除记录,致少选择一行"
       action: '', //点击该动作时发送的全局消息，注意发送的消息的参数为一个数组包含了当前表格选择的所有记录的json对象集合。
       red: false, // 是否为红色按钮
     },
     {
-      text: '按钮', //文本,
-      type: 'onerow|batch|normal', //按钮的模式onerow只有选中一行时才能点击，batch需要选中大于1条，normal一直可操作，默认为normal
+      text: '选择大于一条', //文本,
+      type: 'batch', //onerow|batch|normal按钮的模式onerow只有选中一行时才能点击，batch需要选中大于1条，normal一直可操作，默认为normal
+      tooltip: '第二个', //可使用时的正常提示，如果不可用时显示tooltip时可以在正常tooltip后附加不可用的原因或指导操作，例如“删除记录,致少选择一行"
+      action: '', //点击该动作时发送的全局消息，注意发送的消息的参数为一个数组包含了当前表格选择的所有记录的json对象集合。
+      red: false, // 是否为红色按钮
+    },
+    {
+      text: '无限制', //文本,
+      type: 'normal', //按钮的模式onerow只有选中一行时才能点击，batch需要选中大于1条，normal一直可操作，默认为normal
       tooltip: '', //可使用时的正常提示，如果不可用时显示tooltip时可以在正常tooltip后附加不可用的原因或指导操作，例如“删除记录,致少选择一行"
       action: '', //点击该动作时发送的全局消息，注意发送的消息的参数为一个数组包含了当前表格选择的所有记录的json对象集合。
       red: true, // 是否为红色按钮

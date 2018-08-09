@@ -5,6 +5,9 @@
 .mlr30 {
   margin: 0 30px;
 }
+.mtb20{
+  margin: 20px 0;
+}
 
 .mr5 {
   margin-right: 5px;
@@ -26,13 +29,22 @@
   margin-right: 20px;
 }
 
-.pr10 {
-  padding-right: 10px;
-}
-
 .ptb20 {
   padding: 20px 0;
 }
+.ptb10 {
+  padding: 10px 0;
+}
+.plr10 {
+  padding: 0 10px;
+}
+.pr10 {
+  padding-right: 10px;
+}
+.pb20{
+  padding-bottom: 20px;
+}
+
 
 .dsf {
   display: flex;
@@ -49,11 +61,33 @@
 .aic {
   align-items: center;
 }
+.fww{
+  flex-wrap: wrap;
+}
 
 .csp {
   cursor: pointer;
 }
+.tac{
+  text-align: center;
+}
 
 .bdb{
   border-bottom: 1px solid #ebeef5;
+}
+.bdl{
+  border-left: 1px solid #ebeef5;
+}
+
+.w100{
+  width: 100%;
+}
+.grad20{
+  width: 20%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.blue{
+  color: #47a3ff;
 }
