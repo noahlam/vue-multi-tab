@@ -1,29 +1,16 @@
-# README
+### 介绍
 
+这是一套基于 `vue` 和 `element-ui` , 实现了 `tab-router` (一个基于 tab 的路由) 的 **单页面**, **多页签** 应用程序。
 
-### 安装依赖
+我之前写这个项目的时候，有写了一篇 [记一次基于vue的spa多页签实践经验](https://github.com/noahlam/articles/blob/master/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%9F%BA%E4%BA%8Evue%E7%9A%84spa%E5%A4%9A%E9%A1%B5%E7%AD%BE%E5%AE%9E%E8%B7%B5%E7%BB%8F%E9%AA%8C.md)
+然后就部分热心网友就在下面回复了一些其他类似的项目，我逐一查看了一下，发现基本都是基于 `vue-router` 和 `keep-alive ` 实现的，这种实现方法有两个比较明显的问题，第一是很难在页签内部跳转，比如我现在这个页签打开的是组件a,然后点击组件a里面的某个链接，我想跳转到组件b,但是是需要在页签不变的情况下打开，不能在新的页签打开，这样基于路由的就很难实现。
+另一个问题就是 需要处理   `keep-alive` 的问题，有趟过 `keep-alive` 的坑的童鞋基本都了解。
 
-```
-npm i
-```
+那么我这个 `vue-multi-tab` 跟其他产品有什么不同呢？－－除了实现多页签功能以为，我们还有很多跟其他同类产品不同的特性，如下。
 
-或者
+#### 主要特性：
 
-```
-yarn
-```
-
-### 开发
- ```console
- npm run dev
- ```
-
-
-### 部署
-
-```
-npm run build
-```
-
-
-> Tip: `webStrom` 的 `run/debug configurations 工具` 可以让你免去输入 `npm run dev` 的麻烦.直接点击按钮即可运行相应的命令.
+1. 可以在页签内跳转组件
+2. 无需处理 `keep-alive` 问题
+3. 双重历史记录(页签内部历史记录和页签历史记录)
+4. 类似 `vue-router` 的 API（push,replace,back） 

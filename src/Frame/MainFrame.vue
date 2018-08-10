@@ -623,7 +623,8 @@ export default {
 
   /*右侧布局*/
   .right {
-    width: 100%;
+    /*width: 100%;*/
+    width: calc(100vw - 200px);
     background: #fff;
     border-top: 1px solid #e6e6e6;
   }
@@ -647,7 +648,7 @@ export default {
 
   .tabWrap {
     position: relative;
-    width: calc(100% - 200px);
+    width: 100%;
   }
 
   .tabBar {
