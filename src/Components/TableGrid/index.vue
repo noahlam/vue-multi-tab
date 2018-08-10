@@ -2,7 +2,7 @@
   <div>
     <Form />
 
-    <div class="box ptb20 pr10">
+    <div class="box ptb10">
       <FilterList />
       <Custom />
     </div>
