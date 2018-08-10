@@ -1,5 +1,17 @@
+body{margin: 0;padding:0;}
+/*全局字体*/
+*{
+  font-family: "Microsoft YaHei","微软雅黑","Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB",Arial,sans-serif;
+}
+
+/*解决Firefox下，文本框会有红色边框的问题*/
+input[required]:invalid, input:focus:invalid, textarea[required]:invalid, textarea:focus:invalid{box-shadow: none;}
+input[validateevent='true']{box-shadow: none;}
+
 /* 主要为了覆盖 element 默认样式 */
 
+/*菜单边框*/
+.el-menu{ border:none!important;}
 /*菜单背景*/
 .el-menu {
   background: #071526 !important;

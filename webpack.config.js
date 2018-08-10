@@ -1,7 +1,7 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpackConfig = {
   mode: "development",
   entry: {
@@ -33,6 +33,13 @@ const webpackConfig = {
       template: 'index.html',
       inject: true
     }),
+	  new CopyWebpackPlugin([
+		  {
+			  from: path.resolve(__dirname, './src/Images'),
+			  to: 'Images',
+			  ignore: ['.*']
+		  }
+	  ])
   ],
   module: {
     rules: [
