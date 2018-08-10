@@ -2,6 +2,10 @@ const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HappyPack = require('happypack')
+const os = require('os')
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
+
 const webpackConfig = {
   mode: "development",
   entry: {
@@ -39,12 +43,18 @@ const webpackConfig = {
 			  to: 'Images',
 			  ignore: ['.*']
 		  }
-	  ])
+	  ]),
+	  //开启多线程进行打包
+	  new HappyPack({
+		  id: 'happy-babel-js',
+		  loaders: ['babel-loader?cacheDirectory=true'],
+		  threadPool: happyThreadPool
+	  })
   ],
   module: {
     rules: [
-	    {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
-      // {test: /\.js$/, exclude: /node_modules/, use: {loader: 'babel-loader',}},
+	    // {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
+	    {test: /\.js$/, loader: 'happypack/loader?id=happy-babel-js',include: [path.resolve('src')], exclude: /node_modules/},
       {test: /\.json$/, use: 'json-loader'},
       {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
       {test: /\.vue$/, use: 'vue-loader'},

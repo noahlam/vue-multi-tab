@@ -4,6 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin') //开启多线程进行加快速度
+const HappyPack = require('happypack')
+const os = require('os')
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 
 module.exports = {
   mode: "production",
@@ -31,11 +34,24 @@ module.exports = {
       inject: true,
       chunks: ['index'],
     }),
+	  new CopyWebpackPlugin([
+		  {
+			  from: path.resolve(__dirname, './src/Images'),
+			  to: 'Images',
+			  ignore: ['.*']
+		  }
+	  ]),
     new UglifyJSPlugin({
       cache: true,
       parallel: true,
       sourceMap: true
-    }), //开启多线程进行打包
+    }),
+    //开启多线程进行打包
+	  new HappyPack({
+		  id: 'happy-babel-js',
+		  loaders: ['babel-loader?cacheDirectory=true'],
+		  threadPool: happyThreadPool
+	  })
   ],
   // optimization:{
   //   splitChunks: {  // 加这个打包会变慢很多
@@ -61,7 +77,8 @@ module.exports = {
   module: {
     rules: [
       {test: /\.vue$/, loader: 'vue-loader'},
-      {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
+      // {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
+      {test: /\.js$/, loader: 'happypack/loader?id=happy-babel-js',include: [path.resolve('src')], exclude: /node_modules/},
       {test: /\.css$/, loader: 'style-loader!css-loader'},
       // {test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'},
       {test: /\.json$/, loader: 'json-loader'},
