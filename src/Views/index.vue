@@ -1,18 +1,13 @@
 <template>
   <div class="wrap">
-    <Form />
-
-    <FilterAndCustom />
-    <TableList />
+    <TableGrid />
 
   </div>
 </template>
 <script>
-  import TableList from '@/Components/Table/TableList'
-  import Form from '@/Components/Form/Form'
-  import FilterAndCustom from '@/Components/FilterAndCustom'
+  import TableGrid from '@/Components/TableGrid'
   export default {
-    components: {TableList,Form,FilterAndCustom},
+    components: {TableGrid},
     data() {
       return {
       }
