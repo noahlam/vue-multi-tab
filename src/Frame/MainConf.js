@@ -22,7 +22,7 @@ export default {
           component: 'hello1',   // 点击菜单打开的组件名称
           menuId: '1-1'           // 索引 (用于识别当前打开的tab,必须唯一，是字符串)
         },
-        {title:'子菜单1-2',component: 'hello2',menuId: '1-2'},
+        {title:'子菜单1-2',component: 'index',menuId: '1-2'},
         {title:'子菜单1-3',component: 'hello3',menuId: '1-3'}
       ]
     },

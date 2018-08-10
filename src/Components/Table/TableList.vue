@@ -1,11 +1,12 @@
 <template>
   <div>
-    <el-table :data="config.columns" border style="width: 100%">
+    <el-table :data="config.listData" border style="width: 100%" class="bgt"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"> </el-table-column>
-      <el-table-column v-for="(item, index) in config.columns" :sortable="item.sortable" prop="date" :label="item.title">
+      <el-table-column v-for="(item, index) in config.columns" :key="index" :sortable="item.sortable" prop="date" :label="item.title">
         <template slot-scope="scope">
-          <div v-if="item.tpl" v-html="item.tpl"></div>
-          <span v-else>{{item.displayField}}</span>
+          <!--<div v-if="item.tpl" v-html="item.tpl"></div>-->
+          <!--<span v-else>{{item.displayField}}</span>-->
+          <div v-html="handleField(item, scope.row)"></div>
         </template>
       </el-table-column>
     </el-table>
@@ -17,8 +18,20 @@
          :total="400">
       </el-pagination>
     </div>
-    <div class="ptb20">
-      <el-button class="footBtn" v-for="(item, index) in config.actions" :type="`${item.red ? 'danger' : 'primary'}`" :key="index">{{item.text}}</el-button>
+    <div class="ptb20 dsf">
+      <div class="mr20" v-for="(item, index) in config.actions" :key="index">
+        <el-tooltip v-if="item.tooltip" class="item" effect="dark" :content="btnToolTip(item)" placement="top">
+          <el-button class="footBtn"
+                     :type="`${item.red ? 'danger' : 'primary'}`"
+                     @click="toClickBtn(item)"
+          >{{item.text}}</el-button>
+        </el-tooltip>
+        <el-button v-else class="footBtn"
+                   :type="`${item.red ? 'danger' : 'primary'}`"
+                   @click="toClickBtn(item)"
+        >{{item.text}}</el-button>
+      </div>
+
     </div>
   </div>
   
@@ -31,7 +44,54 @@
     name: 'TableList',
     data () {
       return {
-        config: config
+        config: config,
+        selectList: []
+      }
+    },
+    methods: {
+      // 处理每个单元格要显示的数据
+      handleField (item, dataItem) {
+        if (item.tpl) {
+          return item.tpl.replace('{name}', dataItem[item.name])
+        } else {
+          return dataItem[item.displayField]
+        }
+      },
+      // 选中的数据
+      handleSelectionChange (val) {
+        this.selectList = val
+      },
+
+      // 按钮的tooltip
+      btnToolTip (btnItem) {
+        if (btnItem.type === 'onerow') {
+          if (this.selectList.length !== 1) {
+            return btnItem.tooltip + '，只有选中一行'
+          }
+        } else if (btnItem.type === 'batch') {
+          if (this.selectList.length <= 1) {
+            return btnItem.tooltip + '，至少选择两行'
+          }
+        }
+        return btnItem.tooltip
+      },
+      // 按钮点击
+      toClickBtn (btnItem) {
+        // type: 'onerow|batch|normal', //按钮的模式onerow只有选中一行时才能点击，batch需要选中大于1条，normal一直可操作，默认为normal
+        if (btnItem.type === 'onerow') {
+          if (this.selectList.length !== 1) {
+            this.$message.error('请选择一条数据')
+            return false
+          }
+        } else if (btnItem.type === 'batch') {
+          if (this.selectList.length <= 1) {
+            this.$message.error('请选择大于一条数据')
+            return false
+          }
+        }
+
+        // 下面是点击可操作的
+
       }
     }
   }
