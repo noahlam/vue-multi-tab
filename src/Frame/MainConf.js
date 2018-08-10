@@ -6,10 +6,13 @@ export default {
 	* 且路径必须以 '/Images/' 开头,如 '/Images/xxx.png'
 	* */
 	logoUrl: '/Images/logo2.png',
-	logoText: '材联合采购',                          // 顶部栏左侧的logo文字
-	projectName: '耗材联采限价采购-宁德耗材联合谈判',  // 顶部栏左侧显示的 项目名称
+	// logoText: '材联合采购',                          // 顶部栏左侧的logo文字
+	// projectName: '耗材联采限价采购-宁德耗材联合谈判',  // 顶部栏左侧显示的 项目名称
+	logoText: '株洲商务局报表',                          // 顶部栏左侧的logo文字
+	projectName: '株洲商务局和粮食局报表平台',  // 顶部栏左侧显示的 项目名称
 	user: {
-		company: '宁德市药械联合限价采购平台',     // 客户所在单位
+		// company: '宁德市药械联合限价采购平台',     // 客户所在单位
+		company: '株洲商务局和粮食局报表平台',     // 客户所在单位
 		name: '张三丰',                          // 当前登陆的用户名称
 		avatar: '/Images/default.jpg',     // 当前登陆的用户头像 (用法同 logoUrl)
 	},

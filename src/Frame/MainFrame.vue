@@ -7,7 +7,7 @@
         <!--logo 开始-->
         <div class="topLogo">
           <img class="topLogo-img" :src="config.logoUrl"/>
-          <div class="topLogoText">耗材联合采购</div>
+          <div class="topLogoText">株洲商务局报表</div>
         </div>
         <!--logo 结束-->
 

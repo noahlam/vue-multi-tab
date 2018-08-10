@@ -53,7 +53,7 @@
 
 <script>
 
-  import config from './TableConfig'
+  import config from '../../TableConfig'
   export default {
     name: 'TableList',
     data () {
