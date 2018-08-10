@@ -5,11 +5,14 @@ export default {
 	* logoUrl 可以是绝对路径,也可以是相对路径,如果是相对路径,图片文件必须在 src/Images 目录下
 	* 且路径必须以 '/Images/' 开头,如 '/Images/xxx.png'
 	* */
-	logoUrl: '/Images/logo2.png',
+	logoUrl: '/Images/logo3.png',
+	projectName: '株洲商务局和粮食局报表平台',  // 顶部栏左侧显示的 项目名称
+	logoText: '株洲商务局报表',                          // 顶部栏左侧的logo文字
+
+	// logoUrl: '/Images/logo2.png',
 	// logoText: '材联合采购',                          // 顶部栏左侧的logo文字
 	// projectName: '耗材联采限价采购-宁德耗材联合谈判',  // 顶部栏左侧显示的 项目名称
-	logoText: '株洲商务局报表',                          // 顶部栏左侧的logo文字
-	projectName: '株洲商务局和粮食局报表平台',  // 顶部栏左侧显示的 项目名称
+
 	user: {
 		// company: '宁德市药械联合限价采购平台',     // 客户所在单位
 		company: '株洲商务局和粮食局报表平台',     // 客户所在单位

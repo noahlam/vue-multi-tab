@@ -265,8 +265,8 @@ export default {
 				element.webkitRequestFullScreen ||
 				element.mozRequestFullScreen ||
 				element.msRequestFullScreen;
-			document.body.width = 1920
-			document.body.height = 1080
+			// document.body.width = 1920
+			// document.body.height = 1080
 			requestMethod.call(document.body);
 			this.fullScreen = true
 		},
@@ -647,6 +647,7 @@ export default {
 
   .tabWrap {
     position: relative;
+    width: calc(100% - 200px);
   }
 
   .tabBar {
