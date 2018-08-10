@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="config.listData" border style="width: 100%" class="bgt"  @selection-change="handleSelectionChange">
+    <el-table :data="config.listData" ref="table" border style="width: 100%" class="bgt"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"> </el-table-column>
       <el-table-column v-for="(item, index) in config.columns" :key="index" :sortable="item.sortable" prop="date" :label="item.title">
         <template slot-scope="scope">
@@ -11,7 +11,21 @@
       </el-table-column>
     </el-table>
     <div class="dsf jcb ptb20 bdb">
-      <div></div>
+      <div class="dsf aic">
+        <el-checkbox class="mr10" v-model="isSelectAll" label="全选" border size="medium" @change="toSelectAll"> </el-checkbox>
+        <div class="mr10 collectBtn">
+          <span class="mr10">加入收藏</span>|<span class="ml10">查看收藏</span>
+        </div>
+
+        <el-dropdown  trigger="click" placement="top">
+          <el-button class="el-dropdown-link"  size="medium"> 导出 </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="XML">导出XML</el-dropdown-item>
+            <el-dropdown-item command="CSV">导出CSV</el-dropdown-item>
+            <el-dropdown-item command="EXCEL">导出EXCEL</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
       <el-pagination :current-page="12" :page-sizes="[100, 200, 300, 400]"
          :page-size="100"
          layout="total, sizes, prev, pager, next, jumper"
@@ -45,7 +59,8 @@
     data () {
       return {
         config: config,
-        selectList: []
+        selectList: [],
+        isSelectAll: false // 是否全选
       }
     },
     methods: {
@@ -60,6 +75,11 @@
       // 选中的数据
       handleSelectionChange (val) {
         this.selectList = val
+        this.isSelectAll = val.length >= this.config.listData.length
+      },
+      // 全选
+      toSelectAll () {
+        this.$refs.table.toggleAllSelection()
       },
 
       // 按钮的tooltip
@@ -100,6 +120,22 @@
 <style scoped>
   .footBtn{
     min-width: 120px;
+  }
+  .collectBtn{
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    height: 36px;
+    line-height: 1;
+    font-size: 14px;
+    color: #606266;
+  }
+  .collectBtn span{
+    cursor: pointer;
+  }
+  .collectBtn span:hover{
+    color: #409EFF;
   }
 
 </style>

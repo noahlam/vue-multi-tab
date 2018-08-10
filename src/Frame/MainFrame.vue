@@ -187,7 +187,7 @@
                   </el-dropdown-menu>
                 </el-dropdown>
 
-                <div class="content">
+                <div class="content pr10">
                   <component :is="item.components[item.components.length - 1].path"></component>
                 </div>
               </el-tab-pane>

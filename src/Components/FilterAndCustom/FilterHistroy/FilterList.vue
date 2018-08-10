@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <el-table :data="list" style="width: 100%"  @selection-change="handleSelectionChange" empty-text="无历史查询">
+      <el-table :data="list" style="width: 100%" ref="table"  @selection-change="handleSelectionChange" empty-text="无历史查询">
         <el-table-column type="selection" width="55" align="center"> </el-table-column>
         <el-table-column prop="date" label="查询内容">
           <template slot-scope="scope">
@@ -46,7 +46,20 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="ptb10 bdb tac">
+      <div class="dsf jcb ptb20 bdb">
+        <div class="dsf aic">
+          <div class="mr10 footerBtn">
+            <el-checkbox class="mr10" v-model="isSelectAll" label="全选" size="medium" @change="toSelectAll"> </el-checkbox>|<span class="ml10">删除</span>
+          </div>
+        </div>
+        <el-pagination :current-page="12" :page-sizes="[100, 200, 300, 400]"
+                       :page-size="100"
+                       layout="total, sizes, prev, pager, next, jumper"
+                       :total="400">
+        </el-pagination>
+      </div>
+      <div class="ptb10 tac">
+        <el-button  size="medium" >清空全部数据</el-button>
         <el-button @click="visible=false"  size="medium" >关闭窗口</el-button>
       </div>
     </div>
@@ -61,7 +74,17 @@
       return {
         visible: false,
         value: '',
-        list: []
+        list: [{}, {}, {}],
+        isSelectAll: false // 是否全选
+      }
+    },
+    methods: {
+      handleSelectionChange (val) {
+        console.log(val)
+        this.isSelectAll = val.length >= this.list.length
+      },
+      toSelectAll () { // 全选的操作
+        this.$refs.table.toggleAllSelection()
       }
     }
   }
@@ -69,7 +92,8 @@
 
 <style scoped>
   .contentWrap{
-    width: 80vw;
+    width: calc(100vw - 260px);
+    min-width: 80vw;
   }
   .titleRight .el-input, .titleRight .el-select{
     width: 200px;
@@ -78,6 +102,22 @@
   .searchRight{
     margin-left: 10px;
     padding-left: 20px;
+  }
+  .footerBtn{
+    padding: 7px 20px;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    height: 36px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #606266;
+  }
+  .footerBtn span{
+    cursor: pointer;
+  }
+  .footerBtn span:hover{
+    color: #409EFF;
   }
 
 </style>
