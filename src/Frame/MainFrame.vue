@@ -6,8 +6,8 @@
       <div class="dsf">
         <!--logo 开始-->
         <div class="topLogo">
-          <img class="topLogo-img" :src="config.logoUrl"/>
-          <div class="topLogoText">株洲商务局报表</div>
+          <img class="topLogo-img" src="/Images/logo.png"/>
+          <div class="topLogoText">Vue Multi Tab</div>
         </div>
         <!--logo 结束-->
 
@@ -65,11 +65,11 @@
             <i class="el-icon-arrow-down ml10"></i>
           </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click="config.onEditPassword">修改密码</el-dropdown-item>
-                <el-dropdown-item @click="config.onViewBaseInfo">基本信息</el-dropdown-item>
-                <el-dropdown-item @click="config.onBindPhone">手机号绑定/解绑</el-dropdown-item>
-                <el-dropdown-item @click="config.onViewOperateLog">操作日志</el-dropdown-item>
-                <el-dropdown-item @click="config.onExit">退出系统</el-dropdown-item>
+                <el-dropdown-item >修改密码</el-dropdown-item>
+                <el-dropdown-item >基本信息</el-dropdown-item>
+                <el-dropdown-item >手机号绑定/解绑</el-dropdown-item>
+                <el-dropdown-item >操作日志</el-dropdown-item>
+                <el-dropdown-item >退出系统</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -240,7 +240,7 @@ export default {
 		},
 		// 打开的页签列表
 		openedTabs () {
-			console.log(this.$store.getters.GetOpenedTabs)
+			// console.log(this.$store.getters.GetOpenedTabs)
 			return this.$store.getters.GetOpenedTabs
 		},
     // 主页 tab 的 menuId
@@ -343,13 +343,10 @@ export default {
 			this.listenKeyBoardEvent()
 			this.initializeMemu()
       this.listenHistory()
-			config.onInit()
 		},
 		mounted () {
-			config.onShow()
 		},
 		beforeDestroy () {
-			config.onDistory()
 		}
 	}
 </script>
@@ -359,7 +356,6 @@ export default {
   @import "~@/Styles/cover.css";
   @import "~@/Styles/common.css";
   @import "~@/Styles/iconfont/iconfont.css";
-
 </style>
 
 <!--私有样式-->

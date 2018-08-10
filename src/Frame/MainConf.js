@@ -5,13 +5,10 @@ export default {
 	* logoUrl 可以是绝对路径,也可以是相对路径,如果是相对路径,图片文件必须在 src/Images 目录下
 	* 且路径必须以 '/Images/' 开头,如 '/Images/xxx.png'
 	* */
-	logoUrl: '/Images/logo3.png',
+	logoUrl: '/Images/logo.png',
 	projectName: '株洲商务局和粮食局报表平台',  // 顶部栏左侧显示的 项目名称
 	logoText: '株洲商务局报表',                          // 顶部栏左侧的logo文字
 
-	// logoUrl: '/Images/logo2.png',
-	// logoText: '材联合采购',                          // 顶部栏左侧的logo文字
-	// projectName: '耗材联采限价采购-宁德耗材联合谈判',  // 顶部栏左侧显示的 项目名称
 
 	user: {
 		// company: '宁德市药械联合限价采购平台',     // 客户所在单位
@@ -111,69 +108,5 @@ export default {
 		title: '首页',                     //  tab 显示标题
 		menuId: 'home',                   //  tab 内部名称(用来识别当前打开的tab)
 		components: [{path: 'home'}],     //  tab 对应的组件
-	},
-
-	// 函数配置
-
-	/**
-	 * 页面初始化
-	 */
-	onInit () {
-	},
-	/**
-	 * 页面挂载
-	 */
-	onShow () {
-	},
-	/**
-	 * 页面销毁
-	 */
-	onDistory () {
-	},
-
-	/**
-	 * 搜索
-	 * @param key  搜索关键字
-	 */
-	onSearch (key) {
-	},
-	/**
-	 * 修改密码
-	 */
-	onEditPassword () {
-	},
-	/**
-	 * 查看用户基本信息
-	 */
-	onViewBaseInfo () {
-	},
-	/**
-	 * 绑定手机
-	 */
-	onBindPhone () {
-	},
-	/**
-	 * 查看操作日志
-	 */
-	onViewOperateLog () {
-	},
-	/**
-	 * 退出系统
-	 */
-	onExit () {
-	},
-	/**
-	 * 添加收藏
-	 * @param item  Object 要添加的菜单项
-	 */
-	addCollect (item) {
-	},
-	/**
-	 * 取消收藏
-	 * @param item  Object 要取消的菜单项
-	 */
-	removeCollect (item) {
 	}
-
-
 }

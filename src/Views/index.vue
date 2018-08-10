@@ -1,13 +1,11 @@
 <template>
-    <TableGrid />
+  <div>我是index</div>
 </template>
 <script>
-  import TableGrid from '@/Components/TableGrid'
+
   export default {
-    components: {TableGrid},
     data() {
-      return {
-      }
+      return {}
     },
     methods: {},
     created() {
