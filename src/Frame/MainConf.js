@@ -1,10 +1,13 @@
 export default {
   // 基本配置
-  logoUrl:'./src/Images/logo.png',                // 顶部栏左侧的logo  (注意:这个路径必须是webpack打包后的路径)
+  logoUrl:'./src/Images/logo2.png',                // 顶部栏左侧的logo  (注意:这个路径必须是webpack打包后的路径)
+  logoText:'材联合采购',                           // 顶部栏左侧的logo文字
   projectName:'耗材联采限价采购-宁德耗材联合谈判' ,  // 顶部栏左侧显示的 项目名称
-  customerCompany:'宁德市药械联合限价采购平台',     // 客户所在单位
-  customerName:'张三丰',                          // 当前登陆的用户名称
-  customerAvatar:'./src/Images/default.jpg',     // 当前登陆的用户头像  (注意:这个路径必须是webpack打包后的路径)
+  user:{
+	  company:'宁德市药械联合限价采购平台',     // 客户所在单位
+	  name:'张三丰',                          // 当前登陆的用户名称
+	  avatar:'./src/Images/default.jpg',     // 当前登陆的用户头像  (注意:这个路径必须是webpack打包后的路径)
+  },
 
   // 列表配置
   // 菜单列表

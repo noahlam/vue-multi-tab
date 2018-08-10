@@ -7,6 +7,7 @@
         <!--logo 开始-->
         <div class="topLogo">
           <img class="topLogo-img" :src="config.logoUrl"/>
+          <div class="topLogoText">耗材联合采购</div>
         </div>
         <!--logo 结束-->
 
@@ -40,7 +41,7 @@
       <div class="dsf">
         <!--客户公司名称-->
         <div class="projectName">
-          {{config.customerCompany}}
+          {{config.user.company}}
           <!--<el-dropdown>-->
           <!--<span class="mlr30 cfff">-->
           <!--宁德市药械联合限价采购平台<i class="el-icon-arrow-down ml10"></i>-->
@@ -59,8 +60,8 @@
           <div class="userInfo">
             <el-dropdown placement="bottom">
           <span class="mr10 dsf aic cfff">
-            <img :src="config.customerAvatar" class="avatar">
-            {{config.customerName}}
+            <img :src="config.user.avatar" class="avatar">
+            {{config.user.name}}
             <i class="el-icon-arrow-down ml10"></i>
           </span>
               <el-dropdown-menu slot="dropdown">
@@ -395,6 +396,12 @@ export default {
 
   .topLogo-img {
     height: 30px;
+  }
+  .topLogoText{
+    line-height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 5px;
   }
 
   /*应用选择*/
