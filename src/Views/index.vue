@@ -1,8 +1,5 @@
 <template>
-  <div class="wrap">
     <TableGrid />
-
-  </div>
 </template>
 <script>
   import TableGrid from '@/Components/TableGrid'

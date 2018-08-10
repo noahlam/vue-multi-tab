@@ -1,6 +1,6 @@
 <template>
     <el-form :model="config.data" label-position="0" size="medium" class="dsf fww">
-      <el-form-item v-for="(item, index) in config.fields" :key="index+1" class="grad20" v-show="index < 5 || ( isOpen && index >=5)">
+      <el-form-item v-for="(item, index) in fields" :key="index+1" class="grad20" v-show="item.show && (index < 5 || ( isOpen && index >=5))">
         <el-input :key="index" class="w100" v-if="item.xtype==='textformfield'" v-model="config.data[item.name]" :placeholder="item.label"></el-input>
       </el-form-item>
       <el-form-item  class="grad20">
@@ -12,55 +12,20 @@
 </template>
 
 <script>
+  import config from '../../TableConfig'
   export default {
     name: '',
     data () {
       return {
-        config: {
-          fields: [
-            {
-              xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
-              label: '表单1',
-              name: 'field1'
-            },
-            {
-              xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
-              label: '表单2',
-              name: 'field2'
-            },
-            {
-              xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
-              label: '表单1',
-              name: 'field1'
-            },
-            {
-              xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
-              label: '表单2',
-              name: 'field2'
-            },
-            {
-              xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
-              label: '表单1',
-              name: 'field1'
-            },
-            {
-              xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
-              label: '表单2',
-              name: 'field2'
-            },
-            {
-              xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
-              label: '表单3',
-              name: 'field3'
-            }
-          ],
-          data: {
-            field1: '1',
-            field2: '2',
-            field3: ''
-          }
-        },
+        config: config,
         isOpen: false
+      }
+    },
+    computed:{
+      fields () {
+        return this.config.fields.filter(item => {
+          return item.show
+        })
       }
     },
     methods: {
@@ -74,7 +39,7 @@
 
 <style scoped>
   .btn{
-    width: 100px;
+    width: 78px;
   }
 
 </style>

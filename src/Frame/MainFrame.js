@@ -10,7 +10,7 @@ import RouterMethods from '@/Router/RouterMethods'
 
 Vue.use(TabRoute)
 Vue.use(RouterMethods)
-Vue.use(ElementUI);
+Vue.use(ElementUI, {size: 'medium'});
 
 new Vue({
     el: '#app',

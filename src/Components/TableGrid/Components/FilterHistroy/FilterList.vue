@@ -1,7 +1,7 @@
 <template>
   <el-popover
      placement="bottom-end"
-     :offset="102"
+     :offset="122"
      width="80vw"
      popper-class="filterHistoryWrap"
      v-model="visible">
@@ -63,7 +63,7 @@
         <el-button @click="visible=false"  size="medium" >关闭窗口</el-button>
       </div>
     </div>
-    <el-button :type="`${visible ? 'primary' : ''}`"  size="medium" slot="reference">筛选历史</el-button>
+    <el-button :type="`${visible ? 'primary' : ''}`"  size="medium" slot="reference" icon="el-icon-time">筛选历史</el-button>
   </el-popover>
 </template>
 

@@ -9,7 +9,11 @@ export default {
       files2: 'files2',
       files21: 'files21',
       files3: 'files3',
-      files31: 'files31'
+      files31: 'files31',
+      files41: 'files41',
+      files51: 'files51',
+      files61: 'files61',
+      collect: true
     },
     {
       files1: 'files12',
@@ -17,7 +21,11 @@ export default {
       files2: 'files22',
       files21: 'files212',
       files3: 'files32',
-      files31: 'files312'
+      files31: 'files312',
+      files41: 'files412',
+      files51: 'files512',
+      files61: 'files612',
+      collect: false
     },
     {
       files1: 'files13',
@@ -25,9 +33,15 @@ export default {
       files2: 'files23',
       files21: 'files213',
       files3: 'files33',
-      files31: 'files313'
+      files31: 'files313',
+      files41: 'files413',
+      files51: 'files513',
+      files61: 'files613',
+      collect: true
     },
   ],
+
+  showCollect: false, // 是否是显示收藏的数据
 
   columns: [
     {
@@ -37,6 +51,7 @@ export default {
       action: '', //动作名，点击该单元格值时发送的全局消息，发送action时应当将当前行的数据作为json发送给消息方法。(未知含义)
       tpl: '<red>{name}</red>', //显示模板表达式，例如:'<red>{name}</red>'，其中的name将用当前数据行对象的name属性替代
       displayField: 'files11', //显示对应行记录对象的字段名，相当于tpl="{xxx}"，直接取某列显示
+      show: true
     },
     {
       name: 'files2', //值对对应行记录对象的字段名,
@@ -45,6 +60,7 @@ export default {
       action: '', //动作名，点击该单元格值时发送的全局消息，发送action时应当将当前行的数据作为json发送给消息方法。
       tpl: '', //显示模板表达式，例如:'<red>{name}</red>'，其中的name将用当前数据行对象的name属性替代
       displayField: 'files21', //显示对应行记录对象的字段名，相当于tpl="{xxx}"，直接取某列显示
+      show: true
     },
     {
       name: 'files3', //值对对应行记录对象的字段名,
@@ -53,6 +69,34 @@ export default {
       action: '', //动作名，点击该单元格值时发送的全局消息，发送action时应当将当前行的数据作为json发送给消息方法。
       tpl: '', //显示模板表达式，例如:'<red>{name}</red>'，其中的name将用当前数据行对象的name属性替代
       displayField: 'files31', //显示对应行记录对象的字段名，相当于tpl="{xxx}"，直接取某列显示
+      show: false
+    },
+    {
+      name: 'files4', //值对对应行记录对象的字段名,
+      title: '标题4', //标题,
+      sortable: false, //是否支持排序,
+      action: '', //动作名，点击该单元格值时发送的全局消息，发送action时应当将当前行的数据作为json发送给消息方法。
+      tpl: '', //显示模板表达式，例如:'<red>{name}</red>'，其中的name将用当前数据行对象的name属性替代
+      displayField: 'files41', //显示对应行记录对象的字段名，相当于tpl="{xxx}"，直接取某列显示
+      show: true
+    },
+    {
+      name: 'files5', //值对对应行记录对象的字段名,
+      title: '标题5', //标题,
+      sortable: false, //是否支持排序,
+      action: '', //动作名，点击该单元格值时发送的全局消息，发送action时应当将当前行的数据作为json发送给消息方法。
+      tpl: '', //显示模板表达式，例如:'<red>{name}</red>'，其中的name将用当前数据行对象的name属性替代
+      displayField: 'files51', //显示对应行记录对象的字段名，相当于tpl="{xxx}"，直接取某列显示
+      show: true
+    },
+    {
+      name: 'files6', //值对对应行记录对象的字段名,
+      title: '标题6', //标题,
+      sortable: false, //是否支持排序,
+      action: '', //动作名，点击该单元格值时发送的全局消息，发送action时应当将当前行的数据作为json发送给消息方法。
+      tpl: '', //显示模板表达式，例如:'<red>{name}</red>'，其中的name将用当前数据行对象的name属性替代
+      displayField: 'files61', //显示对应行记录对象的字段名，相当于tpl="{xxx}"，直接取某列显示
+      show: true
     },
   ],
   actions: [
@@ -81,5 +125,57 @@ export default {
   qfields: [{
     xtype: 'xxx', // 自定义组件类型的别名，例如:textfield,datefield,daterangefield等.
     init: {} //组件初始化参数
-  }]
+  }],
+
+
+  // 下面是表单数据
+  fields: [
+    {
+      xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
+      label: '表单1',
+      name: 'field1',
+      show: true
+    },
+    {
+      xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
+      label: '表单2',
+      name: 'field2',
+      show: false
+    },
+    {
+      xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
+      label: '表单3',
+      name: 'field1',
+      show: true
+    },
+    {
+      xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
+      label: '表单4',
+      name: 'field2',
+      show: true
+    },
+    {
+      xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
+      label: '表单5',
+      name: 'field1',
+      show: true
+    },
+    {
+      xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
+      label: '表单6',
+      name: 'field2',
+      show: true
+    },
+    {
+      xtype: 'textformfield', //表单域组件的别名，详情各表单域组件说明
+      label: '表单7',
+      name: 'field3',
+      show: true
+    }
+  ],
+  data: {
+    field1: '',
+    field2: '',
+    field3: ''
+  }
 }

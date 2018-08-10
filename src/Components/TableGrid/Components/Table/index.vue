@@ -1,8 +1,12 @@
 <template>
   <div>
-    <el-table :data="config.listData" ref="table" border style="width: 100%" class="bgt"  @selection-change="handleSelectionChange">
+    <div class="dsf jcb aic ptb10" v-show="config.showCollect">
+      <h4 class="m0 collectTitle"><i class="el-icon-star-on mr10"></i>收藏的数据</h4>
+      <el-button size="medium" icon="el-icon-close" @click="config.showCollect = false">关闭收藏</el-button>
+    </div>
+    <el-table :data="listData" ref="table" border style="width: 100%" class="bgt"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"> </el-table-column>
-      <el-table-column v-for="(item, index) in config.columns" :key="index" :sortable="item.sortable" prop="date" :label="item.title">
+      <el-table-column v-for="(item, index) in config.columns" v-if="item.show" :key="index" :sortable="item.sortable" prop="date" :label="item.title">
         <template slot-scope="scope">
           <!--<div v-if="item.tpl" v-html="item.tpl"></div>-->
           <!--<span v-else>{{item.displayField}}</span>-->
@@ -13,8 +17,8 @@
     <div class="dsf jcb ptb20 bdb">
       <div class="dsf aic">
         <el-checkbox class="mr10" v-model="isSelectAll" label="全选" border size="medium" @change="toSelectAll"> </el-checkbox>
-        <div class="mr10 collectBtn">
-          <span class="mr10">加入收藏</span>|<span class="ml10">查看收藏</span>
+        <div class="mr10 collectBtn" v-show="!config.showCollect">
+          <span class="mr10">加入收藏</span>|<span class="ml10" @click="config.showCollect = true">查看收藏</span>
         </div>
 
         <el-dropdown  trigger="click" placement="top">
@@ -61,6 +65,13 @@
         config: config,
         selectList: [],
         isSelectAll: false // 是否全选
+      }
+    },
+    computed : {
+      listData () {
+        return this.config.listData.filter(item => {
+          return config.showCollect ? item.collect : true
+        })
       }
     },
     methods: {
@@ -136,6 +147,12 @@
   }
   .collectBtn span:hover{
     color: #409EFF;
+  }
+  .collectTitle{
+    font-size: 16px;
+  }
+  .collectTitle i{
+    color: #666;
   }
 
 </style>
