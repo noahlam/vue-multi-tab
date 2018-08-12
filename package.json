@@ -1,8 +1,8 @@
 {
-  "name": "hx-framework",
-  "version": "0.0.1",
-  "description": "framework",
-  "repository": "",
+  "name": "vue-multi-tab",
+  "version": "0.0.5",
+  "description": "a multi tab application base on vue and element-ui",
+  "repository": "https://github.com/noahlam/vue-multi-tab.git",
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server",

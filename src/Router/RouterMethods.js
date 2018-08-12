@@ -2,6 +2,7 @@ import store from '@/Store/index'
 
 const RouterMethods = Object.create(null)
 
+// 处理 push 和 replace 2个接口的附带参数
 function processData (item, payload) {
 	let newItem = {}
 	if(typeof item === 'string') {
@@ -39,7 +40,7 @@ function processData (item, payload) {
 RouterMethods.install = function (Vue, options) {
   Vue.prototype.$tab = {
     // 设置当前显示的 tab name
-    setIndex(data) {
+    showTab(data) {
       store.commit('SetCurrentTabIndex', data)
     },
     // 打开新的 tab  项

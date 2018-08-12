@@ -2,8 +2,8 @@
   <div>
     <h3>关闭页签: this.$tab.close()</h3>
     <pre>
-      接收一个 menuId 作为参数,对应要关闭的标签的 menuId.
-      如果menuId没传,或者传的menuId,在一打开的tab列表里面没找到对应的tab.则不做任何操作.
+      接收一个 menuId 作为参数,对应要关闭的 tab 的 menuId.
+      如果 menuId 没传,或者传的 menuId 在打开的 tab 列表里面没找到对应的.则不做任何操作.
     </pre>
   </div>
 </template>

@@ -141,7 +141,7 @@
         <!--打开的菜单(tab-bar) 开始-->
         <div class="tabWrap">
           <div class="tabBar">
-            <el-tabs :value="currentTabIndex" @input="$tab.setIndex" type="card" @tab-remove="$tab.close">
+            <el-tabs :value="currentTabIndex" @input="$tab.showTab" type="card" @tab-remove="$tab.close">
 
               <el-tab-pane
                   v-for="(item, index) in openedTabs"
