@@ -34,34 +34,20 @@
         <!--应用名称 结束-->
 
         <!--当前项目名称-->
-        <div class="currentProjectName">{{config.projectName}}</div>
+        <div class="currentProjectName">一个基于vue的单页面多页签应用程序</div>
       </div>
 
       <!--顶部栏 右侧-->
       <div class="dsf">
         <!--客户公司名称-->
-        <div class="projectName">
-          {{config.user.company}}
-          <!--<el-dropdown>-->
-          <!--<span class="mlr30 cfff">-->
-          <!--宁德市药械联合限价采购平台<i class="el-icon-arrow-down ml10"></i>-->
-          <!--</span>-->
-          <!--<el-dropdown-menu slot="dropdown">-->
-          <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
-          <!--<el-dropdown-item>三明市药械联合限价采购平台</el-dropdown-item>-->
-          <!--<el-dropdown-item>福州市药械联合限价采购招标项目</el-dropdown-item>-->
-          <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
-          <!--<el-dropdown-item>宁德市药械联合限价采购平台</el-dropdown-item>-->
-          <!--</el-dropdown-menu>-->
-          <!--</el-dropdown>-->
-        </div>
+        <div class="projectName">客户公司名称</div>
         <!--用户信息-->
         <div class="userInfoWrap">
           <div class="userInfo">
             <el-dropdown placement="bottom">
           <span class="mr10 dsf aic cfff">
-            <img :src="config.user.avatar" class="avatar">
-            {{config.user.name}}
+            <img src="/Images/default.jpg" class="avatar">
+            张三丰
             <i class="el-icon-arrow-down ml10"></i>
           </span>
               <el-dropdown-menu slot="dropdown">
@@ -188,7 +174,7 @@
                 </el-dropdown>
 
                 <div class="content pr10">
-                  <component :is="item.components[item.components.length - 1].path"></component>
+                  <component :is="item.components[item.components.length - 1].path" v-if="item.components.length"></component>
                 </div>
               </el-tab-pane>
             </el-tabs>
@@ -294,10 +280,10 @@ export default {
 		},
 		// 刷新组件
 		reFreshTab (item) {
-			let c = item.component
-			item.component = null
+			let c = item.components
+			item.components = []
 			this.$nextTick(() => {
-				item.component = c
+				item.components = c
 			})
 		},
 		// 打开 页签
@@ -619,12 +605,13 @@ export default {
 
   /*右侧布局*/
   .right {
-    /*width: 100%;*/
-    width: calc(100vw - 200px);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    flex-shrink: 1;
     background: #fff;
     border-top: 1px solid #e6e6e6;
   }
-
   .fullRight {
     position: fixed;
     top: 0;

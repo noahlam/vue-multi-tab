@@ -1,7 +1,10 @@
 <template>
   <div class="wrap">
-    我是 Hello 2
     <input type="button" value="后退" @click="goback">
+    <h3>后退: this.$tab.back()</h3>
+    <pre>
+      接收一个正整数作为后退的步数(可选,默认是1)
+    </pre>
   </div>
 </template>
 <script>

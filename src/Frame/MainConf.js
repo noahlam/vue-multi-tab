@@ -21,13 +21,13 @@ export default {
 	// 菜单列表
 	menu: [
 		{
-			title: '主菜单1',           // 一级菜单名称
-			icon: 'el-icon-location',  // 一级菜单 icon
+			title: '主菜单1',            // 一级菜单名称
+			icon: 'el-icon-location',   // 一级菜单 icon
 			menuId: '1',                // 索引(必须唯一，是字符串)
-			sub: [                     // 子菜单(二级菜单)
+			sub: [                      // 子菜单(二级菜单)
 				{
 					title: '子菜单1-1',      // 菜单名称
-					component: 'hello1',   // 点击菜单打开的组件名称
+					component: 'hello1',    // 点击菜单打开的组件名称
 					menuId: '1-1'           // 索引 (用于识别当前打开的tab,必须唯一，是字符串)
 				},
 				{title: '子菜单1-2', component: 'index', menuId: '1-2'},

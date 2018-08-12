@@ -40,8 +40,7 @@ export default {
 		// 设置 hash
 		SetHash (state) {
 			let cur = state.openedTabs.find(i => i.menuId === state.currentTabIndex)
-			location.hash = '#' + Base64.encode(JSON.stringify(cur))
-			// location.hash = '#' +  JSON.stringify(cur)
+			location.hash =  Base64.encode(JSON.stringify(cur))
 		},
 		// 设置 主页 tab
 		SetHomeTab (state,item) {
@@ -101,11 +100,11 @@ export default {
 			store.commit('SetHash')
 		},
 		// 返回
-		OpenedSubTabsBack (state, num = 0) {
+		OpenedSubTabsBack (state, num = 1) {
 			if (num < 1) num = 1
 			state.openedTabs.map(i => {
 				if (i.menuId === state.currentTabIndex) {
-					let newLength = i.components.length - num
+					let newLength = i.components.length - ~~num
 					if (newLength > 0) {
 						i.components = i.components.slice(0, newLength)
 					}
