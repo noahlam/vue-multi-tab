@@ -30,10 +30,15 @@
     开发的代码全部在 src 里面, src 以外的都是一些配置文件,如果你不需要配置,请直接关注 src 即可
 
     src/MainFrame 框架页内容
+
     src/Images  静态图片文件
+
     src/Router 路由配置, 路由表为 TabRouter.js
+
     src/Store Vuex 目录
+
     src/Styles 一些全局的公共样式
+
     src/Views 实际页面存放位置, 建议业务组件都放这里
 
 ### 主要特性：
