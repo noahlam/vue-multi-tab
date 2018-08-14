@@ -14,7 +14,7 @@ module.exports = {
     index: './src/Frame/MainFrame.js',
   },
   output: {
-    publicPath: "/",
+    publicPath: "./",
     filename: '[name].js',
 	  chunkFilename: '[name].js',
   },
@@ -83,7 +83,7 @@ module.exports = {
       // {test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'},
       {test: /\.json$/, loader: 'json-loader'},
       // {test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/, loader: 'url-loader?limit=8192'},
-      {test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)(\?\S*)?$/, loader: 'file-loader?name=font/[name]-[hash].[ext]&publicPath=/mainframe'},
+      {test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)(\?\S*)?$/, loader: 'file-loader?name=font/[name]-[hash].[ext]&publicPath=/vue-multi-tab'},
       // {test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/, loader: 'file-loader?publicPath=/'},
     ]
   }
