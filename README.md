@@ -8,6 +8,10 @@
 
 那么我这个 `vue-multi-tab` 跟其他产品有什么不同呢？－－除了实现多页签功能以为，我们还有很多跟其他同类产品不同的特性，如下。
 
+### 在线预览
+
+[https://noahlam.github.io/vue-multi-tab/](https://noahlam.github.io/vue-multi-tab/)
+
 ### 快速上手
 1. 安装,安装方式有2种,一种基于脚手架,另一种直接克隆,2中最终得到的结果是一样的,看你自己的选择
 
