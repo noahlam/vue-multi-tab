@@ -6,7 +6,7 @@
       <div class="dsf">
         <!--logo 开始-->
         <div class="topLogo">
-          <img class="topLogo-img" src="/Images/logo.png"/>
+          <img class="topLogo-img" src="@/Images/logo.png"/>
           <div class="topLogoText">Vue Multi Tab</div>
         </div>
         <!--logo 结束-->
@@ -46,7 +46,7 @@
           <div class="userInfo">
             <el-dropdown placement="bottom">
           <span class="mr10 dsf aic cfff">
-            <img src="/Images/default.jpg" class="avatar">
+            <img src="@/Images/default.jpg" class="avatar">
             张三丰
             <i class="el-icon-arrow-down ml10"></i>
           </span>
