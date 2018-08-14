@@ -62,6 +62,7 @@ export default {
 		},
 	},
 	created () {
+		console.log('控制台打印:',this.$tab.info())
 	},
 }
 </script>

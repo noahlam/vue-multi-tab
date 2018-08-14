@@ -29,6 +29,7 @@
 1. closeOthers 关闭除当前标签外的所有标签
 1. reShow 根据地址栏数据,回显标签和标签内的组件
 1. query 获取 push,replace 传递的参数
+1. info 获取 当前激活的 tab 对象
 
 > tips: 更详细的 API 文档请看[这里](https://github.com/noahlam/vue-multi-tab/blob/master/README.md)
 

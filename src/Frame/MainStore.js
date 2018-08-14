@@ -34,6 +34,10 @@ export default {
 				}
 			})
 			return res
+		},
+		// 获取当前激活的 tab
+		GetCurrentTab (state) {
+			return state.openedTabs.find(i => i.menuId === state.currentTabIndex)
 		}
 	},
 	mutations: {

@@ -145,3 +145,6 @@
     ```javascript
     let id = this.$tab.query().id
     ```
+1. info 获取 当前激活的 tab 对象
+
+    返回 当前激活的 tab 对象, 也是一个函数, 要这样调用 `this.$tab.info()`
