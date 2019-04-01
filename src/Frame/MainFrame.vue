@@ -144,8 +144,8 @@
             <el-tabs :value="currentTabIndex" @input="$tab.showTab" type="card" @tab-remove="$tab.close">
 
               <el-tab-pane
-                  v-for="(item, index) in openedTabs"
-                  :key="index"
+                  v-for="item in openedTabs"
+                  :key="item.menuId"
                   :label="item.title"
                   :name="item.menuId"
                   :closable="item.menuId !== homeTabMenuId"
